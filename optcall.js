@@ -151,88 +151,95 @@ var optcall = function optcall( engine ){
 		.forEach( function onEachMethod( method ){
 			var property = method.name;
 
-			if( method.OPTCALL_DELEGATED === OPTCALL_DELEGATED ){
-				return;
-			}
-
-			var delegate = function delegate( option, callback ){
-				option = optfor( arguments, OBJECT );
-				option = glucose.bind( this )( option || this.option );
-
-				callback = optfor( arguments, FUNCTION );
-				if( callback ){
-					callback = called.bind( this )( callback );
-				}
-
-				if( arguments.length == 2 &&
-					typeof arguments[ 0 ] == OBJECT &&
-					typeof arguments[ 1 ] == FUNCTION )
-				{
-					method.bind( this )( option, callback );
-
-				}else{
-					if( this.chainTimeout ){
-						clearTimeout( this.chainTimeout );
-
-						delete this.chainTimeout;
-					}
-
-					this.callStack = this.callStack || [ ];
-
-					this.callStack.push( method );
-
-					this.chainTimeout = snapd.bind( this )
-						( function chain( ){
-							var resultList = [ ];
-
-							series( this.callStack
-								.map( ( function onEachMethod( method ){
-									return ( function( _callback ){
-										method.bind( this )
-											( option, called.bind( this )
-												( function( issue, result, option ){
-													resultList.push( result );
-
-													if( callback ){
-														callback( issue, result, option );
-													}
-
-													if( issue ){
-														_callback( issue );
-
-													}else{
-														_callback( );
-													}
-												} ) );
-									} ).bind( this );
-								} ).bind( this ) ),
-
-								( function lastly( issue ){
-									if( callback ){
-										callback( issue, resultList.pop( ), option );
-
-									}else if( typeof this.emit == FUNCTION ){
-										this.emit( "done", issue, resultList.pop( ), option );
-									}
-
-									this.callStack = [ ];
-
-									delete this.chainTimeout;
-								} ).bind( this ) );
-						} ).timeout;
-				}
-
-				return this;
-			};
-
-			harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
-			harden( "name", property, delegate );
-
-			engine[ property ] = delegate;
+			engine[ property ] = optcall.wrap( method );
 		} );
 
 	return engine;
 };
+
+harden.bind( optcall )
+	( "wrap", function wrap( method ){
+		var property = method.name;
+
+		if( method.OPTCALL_DELEGATED === OPTCALL_DELEGATED ){
+			return method;
+		}
+
+		var delegate = function delegate( option, callback ){
+			option = optfor( arguments, OBJECT );
+			option = glucose.bind( this )( option || this.option );
+
+			callback = optfor( arguments, FUNCTION );
+			if( callback ){
+				callback = called.bind( this )( callback );
+			}
+
+			if( arguments.length == 2 &&
+				typeof arguments[ 0 ] == OBJECT &&
+				typeof arguments[ 1 ] == FUNCTION )
+			{
+				method.bind( this )( option, callback );
+
+			}else{
+				if( this.chainTimeout ){
+					clearTimeout( this.chainTimeout );
+
+					delete this.chainTimeout;
+				}
+
+				this.callStack = this.callStack || [ ];
+
+				this.callStack.push( method );
+
+				this.chainTimeout = snapd.bind( this )
+					( function chain( ){
+						var resultList = [ ];
+
+						series( this.callStack
+							.map( ( function onEachMethod( method ){
+								return ( function( _callback ){
+									method.bind( this )
+										( option, called.bind( this )
+											( function( issue, result, option ){
+												resultList.push( result );
+
+												if( callback ){
+													callback( issue, result, option );
+												}
+
+												if( issue ){
+													_callback( issue );
+
+												}else{
+													_callback( );
+												}
+											} ) );
+								} ).bind( this );
+							} ).bind( this ) ),
+
+							( function lastly( issue ){
+								if( callback ){
+									callback( issue, resultList.pop( ), option );
+
+								}else if( typeof this.emit == FUNCTION ){
+									this.emit( "done", issue, resultList.pop( ), option );
+								}
+
+								this.callStack = [ ];
+
+								delete this.chainTimeout;
+							} ).bind( this ) );
+					} ).timeout;
+			}
+
+			return this;
+		};
+
+		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
+		harden( "name", property, delegate );
+
+		return delegate;
+	} );
 
 harden.bind( optcall )
 	( "FUNCTION_PATTERN",
