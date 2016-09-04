@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
   "scripts": {

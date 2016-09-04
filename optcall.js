@@ -178,7 +178,7 @@ harden.bind( optcall )
 				typeof arguments[ 0 ] == OBJECT &&
 				typeof arguments[ 1 ] == FUNCTION )
 			{
-				method.bind( this )( option, callback );
+				return method.bind( this )( option, callback );
 
 			}else{
 				if( this.chainTimeout ){
