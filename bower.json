@@ -1,0 +1,29 @@
+{
+  "name": "optcall",
+  "description": "Delegate option-callback procedures.",
+  "main": "optcall.js",
+  "authors": [
+    "Richeve S. Bebedor <richeve.bebedor@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "option-callback",
+    "optcall"
+  ],
+  "homepage": "https://github.com/volkovasystems/optcall",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "async": "^2.0.1",
+    "called": "^0.1.0",
+    "glucose": "^0.0.2",
+    "harden": "^0.3.3",
+    "optfor": "^0.1.0",
+    "snapd": "^0.0.3"
+  }
+}
