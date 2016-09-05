@@ -138,21 +138,25 @@ var optcall = function optcall( engine ){
 		optcall( engine.parent );
 	}
 
-	Object.getOwnPropertyNames( engine )
-		.filter( function onEachProperty( property ){
-			return ( typeof engine[ property ] == "function" );
-		} )
-		.map( function onEachProperty( property ){
-			return engine[ property ];
-		} )
-		.filter( function onEachMethod( method ){
-			return optcall.FUNCTION_PATTERN.test( method.toString( ) );
-		} )
-		.forEach( function onEachMethod( method ){
-			var property = method.name;
+	if( typeof engine.constructor == FUNCTION &&
+		typeof engine.constructor.prototype == OBJECT )
+	{
+		Object.getOwnPropertyNames( engine.constructor.prototype )
+			.filter( function onEachProperty( property ){
+				return ( typeof engine[ property ] == "function" );
+			} )
+			.map( function onEachProperty( property ){
+				return engine[ property ];
+			} )
+			.filter( function onEachMethod( method ){
+				return optcall.FUNCTION_PATTERN.test( method.toString( ) );
+			} )
+			.forEach( function onEachMethod( method ){
+				var property = method.name;
 
-			engine[ property ] = optcall.wrap( method );
-		} );
+				engine[ property ] = optcall.wrap( method );
+			} );
+	}
 
 	return engine;
 };
@@ -164,6 +168,8 @@ harden.bind( optcall )
 		if( method.OPTCALL_DELEGATED === OPTCALL_DELEGATED ){
 			return method;
 		}
+
+		harden( "method", method, delegate );
 
 		var delegate = function delegate( option, callback ){
 			option = optfor( arguments, OBJECT );
