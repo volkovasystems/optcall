@@ -51,6 +51,7 @@
 			"called": "called",
 			"harden": "harden",
 			"glucose": "glucose",
+			"Olivant": "olivant",
 			"optfor": "optfor",
 			"snapd": "snapd"
 		}
@@ -61,6 +62,7 @@ if( typeof window == "undefined" ){
 	var called = require( "called" );
 	var harden = require( "harden" );
 	var glucose = require( "glucose" );
+	var Olivant = require( "olivant" );
 	var optfor = require( "optfor" );
 	var snapd = require( "snapd" );
 	var series = require( "async" ).series;
@@ -88,6 +90,12 @@ if( typeof window != "undefined" &&
 	!( "optfor" in window ) )
 {
 	throw new Error( "optfor is not defined" );
+}
+
+if( typeof window != "undefined" &&
+	!( "Olivant" in window ) )
+{
+	throw new Error( "Olivant is not defined" );
 }
 
 if( typeof window != "undefined" &&
@@ -176,17 +184,9 @@ harden.bind( optcall )
 			option = glucose.bind( this )( option || this.option );
 
 			callback = optfor( arguments, FUNCTION );
-			if( callback ){
-				callback = called.bind( this )( callback );
-			}
+			callback = called.bind( this )( callback );
 
-			if( arguments.length == 2 &&
-				typeof arguments[ 0 ] == OBJECT &&
-				typeof arguments[ 1 ] == FUNCTION )
-			{
-				return method.bind( this )( option, callback );
-
-			}else{
+			if( this.chainMode === true ){
 				if( this.chainTimeout ){
 					clearTimeout( this.chainTimeout );
 
@@ -195,31 +195,43 @@ harden.bind( optcall )
 
 				this.callStack = this.callStack || [ ];
 
-				this.callStack.push( method );
+				this.callStack.push( {
+					"method": method,
+					"callback": callback
+				} );
 
 				this.chainTimeout = snapd.bind( this )
 					( function chain( ){
 						var resultList = [ ];
 
+						var callback = called.bind( this )( );
+
 						series( this.callStack
-							.map( ( function onEachMethod( method ){
-								return ( function( _callback ){
-									method.bind( this )
-										( option, called.bind( this )
-											( function( issue, result, option ){
-												resultList.push( result );
+							.map( ( function onEachCall( call ){
+								callback = call.callback;
 
-												if( callback ){
-													callback( issue, result, option );
-												}
+								return ( function delegate( _callback ){
+									var done = called.bind( this )
+										( function( issue, result, option ){
+											resultList.push( result );
 
-												if( issue ){
-													_callback( issue );
+											if( call.callback ){
+												call.callback( issue, result, option );
+											}
 
-												}else{
-													_callback( );
-												}
-											} ) );
+											if( issue ){
+												_callback( issue );
+
+											}else{
+												_callback( );
+											}
+										} );
+
+									snapd.bind( this )( function fallback( ){
+										done( Issue( "failed to call callback" ) );
+									}, 1000 * 5 );
+
+									call.method.bind( this )( option, done );
 								} ).bind( this );
 							} ).bind( this ) ),
 
@@ -231,11 +243,14 @@ harden.bind( optcall )
 									this.emit( "done", issue, resultList.pop( ), option );
 								}
 
-								this.callStack = [ ];
-
+								delete this.callStack;
 								delete this.chainTimeout;
+								delete this.chainMode;
 							} ).bind( this ) );
 					} ).timeout;
+
+			}else{
+				return method.bind( this )( option, callback );
 			}
 
 			return this;
@@ -249,6 +264,6 @@ harden.bind( optcall )
 
 harden.bind( optcall )
 	( "FUNCTION_PATTERN",
-		/^function\s+([a-zA-Z_$][a-zA-Z0-9_$]+)?\s*\(\s*option\s*\,\s*callback\s*\)/ );
+		/^function\s+([a-z_$][a-zA-Z0-9_$]+)?\s*\(\s*option\s*\,\s*callback\s*\)/ );
 
 module.exports = optcall;
