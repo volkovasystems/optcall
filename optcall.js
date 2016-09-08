@@ -125,55 +125,53 @@ if( typeof window != "undefined" &&
 
 harden( "OPTCALL_DELEGATED", "optcall-delegate" );
 
-var optcall = function optcall( engine ){
+var optcall = function optcall( engine, context ){
 	/*;
 		@meta-configuration:
 			{
 				"engine:required": [
 					"object",
 					"function"
-				]
+				],
+				"context": "object"
 			}
 		@end-meta-configuration
 	*/
 
 	engine = optfor( arguments, FUNCTION ) || engine;
+	context = context || optfor( arguments, OBJECT );
 
-	if( typeof engine == FUNCTION &&
-		typeof engine.prototype.parent == FUNCTION )
-	{
-		return optcall( engine.prototype.parent );
+	if( typeof engine == FUNCTION ){
+		optcall( engine.prototype, context );
+	}
 
-	}else if( typeof engine == FUNCTION &&
-		engine.prototype )
-	{
-		return optcall( engine.prototype );
-
-	}else if( typeof engine == OBJECT &&
+	if( typeof engine == OBJECT &&
 		typeof engine.parent == FUNCTION )
 	{
-		optcall( engine.parent );
+		context = context || engine;
+
+		optcall( engine.parent, context );
 	}
 
-	if( typeof engine.constructor == FUNCTION &&
-		typeof engine.constructor.prototype == OBJECT )
-	{
-		Object.getOwnPropertyNames( engine.constructor.prototype )
-			.filter( function onEachProperty( property ){
-				return ( typeof engine[ property ] == "function" );
-			} )
-			.map( function onEachProperty( property ){
-				return engine[ property ];
-			} )
-			.filter( function onEachMethod( method ){
-				return optcall.FUNCTION_PATTERN.test( method.toString( ) );
-			} )
-			.forEach( function onEachMethod( method ){
-				var property = method.name;
-
-				engine[ property ] = optcall.wrap( method );
-			} );
+	if( !context ){
+		return engine;
 	}
+
+	Object.getOwnPropertyNames( engine )
+		.filter( function onEachProperty( property ){
+			return ( typeof engine[ property ] == "function" );
+		} )
+		.map( function onEachProperty( property ){
+			return engine[ property ];
+		} )
+		.filter( function onEachMethod( method ){
+			return optcall.FUNCTION_PATTERN.test( method.toString( ) );
+		} )
+		.forEach( function onEachMethod( method ){
+			var property = method.name;
+
+			context[ property ] = optcall.wrap( method );
+		} );
 
 	return engine;
 };
