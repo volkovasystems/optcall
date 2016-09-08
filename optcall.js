@@ -47,6 +47,7 @@
 
 	@include:
 		{
+			"ate": "ate",
 			"async": "async",
 			"called": "called",
 			"harden": "harden",
@@ -59,6 +60,7 @@
 */
 
 if( typeof window == "undefined" ){
+	var ate = require( "ate" );
 	var called = require( "called" );
 	var harden = require( "harden" );
 	var glucose = require( "glucose" );
@@ -66,6 +68,12 @@ if( typeof window == "undefined" ){
 	var optfor = require( "optfor" );
 	var snapd = require( "snapd" );
 	var series = require( "async" ).series;
+}
+
+if( typeof window != "undefined" &&
+	!( "ate" in window ) )
+{
+	throw new Error( "ate is not defined" );
 }
 
 if( typeof window != "undefined" &&
@@ -130,6 +138,7 @@ var optcall = function optcall( engine ){
 	*/
 
 	engine = optfor( arguments, FUNCTION ) || engine;
+
 	if( typeof engine == FUNCTION &&
 		typeof engine.prototype.parent == FUNCTION )
 	{
@@ -183,6 +192,17 @@ harden.bind( optcall )
 			option = optfor( arguments, OBJECT );
 			option = glucose.bind( this )( option || this.option );
 
+			this.option = this.option || option;
+			if( this.option ){
+				for( var property in option ){
+					if( property != "query" &&
+						property != "setting" )
+					{
+						option[ property ] = this.option[ property ];
+					}
+				}
+			}
+
 			callback = optfor( arguments, FUNCTION );
 			callback = called.bind( this )( callback );
 
@@ -217,6 +237,16 @@ harden.bind( optcall )
 
 											if( call.callback ){
 												call.callback( issue, result, option );
+											}
+
+											if( this.option ){
+												for( var property in option ){
+													if( property != "query" &&
+														property != "setting" )
+													{
+														this.option[ property ] = option[ property ];
+													}
+												}
 											}
 
 											if( issue ){
@@ -257,7 +287,8 @@ harden.bind( optcall )
 		};
 
 		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
-		harden( "name", property, delegate );
+
+		ate( "name", property, delegate );
 
 		return delegate;
 	} );
