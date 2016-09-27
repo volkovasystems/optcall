@@ -155,6 +155,10 @@ var optcall = function optcall( engine, context ){
 		return engine;
 	}
 
+	if( typeof engine == OBJECT ){
+		engine = engine.constructor.prototype;
+	}
+
 	Object.getOwnPropertyNames( engine )
 		.filter( function onEachProperty( property ){
 			return ( typeof engine[ property ] == "function" );
@@ -185,6 +189,7 @@ harden.bind( optcall )
 		harden( "method", method, delegate );
 
 		var delegate = function delegate( option, callback ){
+			option = option || { };
 			var self = option.self || this;
 
 			/*;
@@ -252,10 +257,13 @@ harden.bind( optcall )
 										} );
 
 									snapd.bind( this )( function fallback( ){
-										done( Issue( "failed to call callback" ) );
+										Issue( "failed to call callback", call.method )
+											.prompt( "fallback due to callback failure", this.option )
+											.report( )
+											.pass( done );
 									}, 1000 * 5 );
 
-									call.method.bind( this )( option, done );
+									call.method.bind( this )( this.option, done );
 								} ).bind( this );
 							} ).bind( this ) ),
 
@@ -270,7 +278,7 @@ harden.bind( optcall )
 								while( this.callStack.length ){
 									this.callStack.pop( );
 								}
-								
+
 								delete this.chainTimeout;
 								delete this.chainMode;
 							} ).bind( this ) );
