@@ -145,9 +145,7 @@ var optcall = function optcall( engine, context ){
 		optcall( engine.prototype, context );
 	}
 
-	if( typeof engine == OBJECT &&
-		typeof engine.parent == FUNCTION )
-	{
+	if( typeof engine == OBJECT && typeof engine.parent == FUNCTION ){
 		context = context || engine;
 
 		optcall( engine.parent, context );
@@ -187,38 +185,38 @@ harden.bind( optcall )
 		harden( "method", method, delegate );
 
 		var delegate = function delegate( option, callback ){
-			option = optfor( arguments, OBJECT );
-			option = glucose.bind( this )( option || this.option );
+			var self = option.self || this;
 
-			this.option = this.option || option;
-			if( this.option ){
+			option = optfor( arguments, OBJECT );
+			option = glucose.bind( self )( option || self.option );
+
+			self.option = self.option || option;
+			if( self.option ){
 				for( var property in option ){
-					if( property != "query" &&
-						property != "setting" )
-					{
-						option[ property ] = this.option[ property ];
-					}
+					option[ property ] = this.option[ property ];
 				}
 			}
 
 			callback = optfor( arguments, FUNCTION );
-			callback = called.bind( this )( callback );
+			callback = called.bind( self )( callback );
 
-			if( this.chainMode === true ){
-				if( this.chainTimeout ){
-					clearTimeout( this.chainTimeout );
+			if( self.chainMode === true ){
+				if( self.chainTimeout ){
+					clearTimeout( self.chainTimeout );
 
-					delete this.chainTimeout;
+					delete self.chainTimeout;
 				}
 
-				this.callStack = this.callStack || [ ];
+				if( !( "callStack" in self ) ){
+					harden( "callStack", [ ], self );
+				}
 
-				this.callStack.push( {
+				self.callStack.push( {
 					"method": method,
 					"callback": callback
 				} );
 
-				this.chainTimeout = snapd.bind( this )
+				self.chainTimeout = snapd.bind( self )
 					( function chain( ){
 						var resultList = [ ];
 
@@ -228,7 +226,7 @@ harden.bind( optcall )
 							.map( ( function onEachCall( call ){
 								callback = call.callback;
 
-								return ( function delegate( _callback ){
+								return ( function delegate( tellback ){
 									var done = called.bind( this )
 										( function( issue, result, option ){
 											resultList.push( result );
@@ -239,19 +237,15 @@ harden.bind( optcall )
 
 											if( this.option ){
 												for( var property in option ){
-													if( property != "query" &&
-														property != "setting" )
-													{
-														this.option[ property ] = option[ property ];
-													}
+													this.option[ property ] = option[ property ];
 												}
 											}
 
 											if( issue ){
-												_callback( issue );
+												tellback( issue );
 
 											}else{
-												_callback( );
+												tellback( );
 											}
 										} );
 
@@ -278,10 +272,10 @@ harden.bind( optcall )
 					} ).timeout;
 
 			}else{
-				return method.bind( this )( option, callback );
+				return method.bind( self )( option, callback );
 			}
 
-			return this;
+			return self;
 		};
 
 		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
