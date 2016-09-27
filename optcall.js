@@ -239,6 +239,8 @@ harden.bind( optcall )
 								return ( function delegate( tellback ){
 									var done = called.bind( this )
 										( function( issue, result, option ){
+											clearTimeout( call.timeout );
+
 											resultList.push( result );
 
 											if( call.callback ){
@@ -257,12 +259,13 @@ harden.bind( optcall )
 											}
 										} );
 
-									snapd.bind( call )( function fallback( ){
-										Issue( "failed to call callback", this.method )
-											.prompt( "fallback due to callback failure", this.self.option )
-											.report( )
-											.pass( done );
-									}, 1000 * 5 );
+									call.timeout = snapd.bind( this )
+										( function fallback( ){
+											Issue( "failed to call callback", call.method )
+												.prompt( "fallback due to callback failure", this.option )
+												.report( )
+												.pass( done );
+										}, 1000 * 5 ).timeout;
 
 									call.method.bind( this )( this.option, done );
 								} ).bind( this );
