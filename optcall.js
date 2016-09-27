@@ -187,14 +187,18 @@ harden.bind( optcall )
 		var delegate = function delegate( option, callback ){
 			var self = option.self || this;
 
+			/*;
+				@note:
+					This should be clear, the option given by individual method
+						can override the instance option.
+				@end-note
+			*/
 			option = optfor( arguments, OBJECT );
-			option = glucose.bind( self )( option || self.option );
-
 			self.option = self.option || option;
-			if( self.option ){
-				for( var property in option ){
-					option[ property ] = this.option[ property ];
-				}
+			self.option = glucose.bind( self )( self.option );
+
+			for( var property in option ){
+				self.option[ property ] = option[ property ];
 			}
 
 			callback = optfor( arguments, FUNCTION );
@@ -235,10 +239,8 @@ harden.bind( optcall )
 												call.callback( issue, result, option );
 											}
 
-											if( this.option ){
-												for( var property in option ){
-													this.option[ property ] = option[ property ];
-												}
+											for( var property in option ){
+												this.option[ property ] = option[ property ];
 											}
 
 											if( issue ){
@@ -265,14 +267,17 @@ harden.bind( optcall )
 									this.emit( "done", issue, resultList.pop( ), option );
 								}
 
-								delete this.callStack;
+								while( this.callStack.length ){
+									this.callStack.pop( );
+								}
+								
 								delete this.chainTimeout;
 								delete this.chainMode;
 							} ).bind( this ) );
 					} ).timeout;
 
 			}else{
-				return method.bind( self )( option, callback );
+				return method.bind( self )( self.option, callback );
 			}
 
 			return self;
