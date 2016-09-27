@@ -221,6 +221,7 @@ harden.bind( optcall )
 				}
 
 				self.callStack.push( {
+					"self": self,
 					"method": method,
 					"callback": callback
 				} );
@@ -256,9 +257,9 @@ harden.bind( optcall )
 											}
 										} );
 
-									snapd.bind( this )( function fallback( ){
-										Issue( "failed to call callback", call.method )
-											.prompt( "fallback due to callback failure", this.option )
+									snapd.bind( call )( function fallback( ){
+										Issue( "failed to call callback", this.method )
+											.prompt( "fallback due to callback failure", this.self.option )
 											.report( )
 											.pass( done );
 									}, 1000 * 5 );
