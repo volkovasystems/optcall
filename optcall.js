@@ -191,7 +191,6 @@ harden.bind( optcall )
 		var delegate = function delegate( option, callback ){
 			option = option || { };
 
-			option.self = option.self || this;
 			var self = option.self || this;
 
 			/*;
