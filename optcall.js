@@ -42,7 +42,7 @@
 	@end-module-configuration
 
 	@module-documentation:
-
+		Delegate option-callback procedures.
 	@end-module-documentation
 
 	@include:
@@ -243,6 +243,8 @@ harden.bind( optcall )
 										( function( issue, result, option ){
 											clearTimeout( call.timeout );
 
+											option.result = result;
+
 											resultList.push( result );
 
 											if( call.callback ){
@@ -264,6 +266,7 @@ harden.bind( optcall )
 									call.timeout = snapd.bind( this )
 										( function fallback( ){
 											Issue( "failed to call callback", call.method )
+												.remind( "possible delay of execution" )
 												.prompt( "fallback due to callback failure", this.option )
 												.report( )
 												.pass( done );
@@ -291,7 +294,12 @@ harden.bind( optcall )
 					} ).timeout;
 
 			}else{
-				return method.bind( self )( self.option, callback );
+				return method.bind( self )
+					( self.option, called( function onResult( issue, result, option ){
+						option.result = result;
+
+						callback( issue, result, option );
+					} ) );
 			}
 
 			return self;
