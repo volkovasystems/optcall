@@ -170,7 +170,7 @@ var optcall = function optcall( engine, context ){
 			return optcall.FUNCTION_PATTERN.test( method.toString( ) );
 		} )
 		.forEach( function onEachMethod( method ){
-			var property = method.name;
+			let property = method.name;
 
 			context[ property ] = optcall.wrap( method );
 		} );
@@ -180,7 +180,7 @@ var optcall = function optcall( engine, context ){
 
 harden.bind( optcall )
 	( "wrap", function wrap( method ){
-		var property = method.name;
+		let property = method.name;
 
 		if( method.OPTCALL_DELEGATED === OPTCALL_DELEGATED ){
 			return method;
@@ -188,10 +188,10 @@ harden.bind( optcall )
 
 		harden( "method", method, delegate );
 
-		var delegate = function delegate( option, callback ){
+		let delegate = function delegate( option, callback ){
 			option = option || { };
 
-			var self = option.self || this;
+			let self = option.self || this;
 
 			/*;
 				@note:
@@ -203,7 +203,7 @@ harden.bind( optcall )
 			self.option = self.option || option;
 			self.option = glucose.bind( self )( self.option );
 
-			for( var property in option ){
+			for( let property in option ){
 				self.option[ property ] = option[ property ];
 			}
 
@@ -229,16 +229,16 @@ harden.bind( optcall )
 
 				self.chainTimeout = snapd.bind( self )
 					( function chain( ){
-						var resultList = [ ];
+						let resultList = [ ];
 
-						var callback = called.bind( this )( );
+						let callback = called.bind( this )( );
 
 						series( this.callStack
 							.map( ( function onEachCall( call ){
 								callback = call.callback;
 
 								return ( function delegate( tellback ){
-									var done = called.bind( this )
+									let done = called.bind( this )
 										( function( issue, result, option ){
 											clearTimeout( call.timeout );
 
@@ -250,7 +250,7 @@ harden.bind( optcall )
 												call.callback( issue, result, option );
 											}
 
-											for( var property in option ){
+											for( let property in option ){
 												this.option[ property ] = option[ property ];
 											}
 
