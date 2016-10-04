@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "dependencies": {
     "async": {
       "version": "2.0.1",

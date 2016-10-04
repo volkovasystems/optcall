@@ -186,8 +186,6 @@ harden.bind( optcall )
 			return method;
 		}
 
-		harden( "method", method, delegate );
-
 		let delegate = function delegate( option, callback ){
 			option = option || { };
 
@@ -305,6 +303,8 @@ harden.bind( optcall )
 		};
 
 		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
+
+		harden( "method", method, delegate );
 
 		ate( "name", property, delegate );
 
