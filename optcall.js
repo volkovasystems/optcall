@@ -124,6 +124,7 @@ if( typeof window != "undefined" &&
 }
 
 harden( "OPTCALL_DELEGATED", "optcall-delegate" );
+harden( "OPTCALL_WRAPPED", "optcall-wrapped" );
 
 var optcall = function optcall( engine, context ){
 	/*;
@@ -139,6 +140,16 @@ var optcall = function optcall( engine, context ){
 	*/
 
 	engine = optfor( arguments, FUNCTION ) || engine;
+
+	if( typeof engine == OBJECT ){
+		if( engine.OPTCALL_WRAPPED == OPTCALL_WRAPPED ){
+			return engine;
+
+		}else{
+			ate( "OPTCALL_WRAPPED", OPTCALL_WRAPPED, engine );
+		}
+	}
+
 	context = context || optfor( arguments, OBJECT );
 
 	if( typeof engine == FUNCTION ){
@@ -179,6 +190,10 @@ var optcall = function optcall( engine, context ){
 
 			context[ property ] = optcall.wrap( method );
 		} );
+
+	snapd( function clear( ){
+		delete engine.OPTCALL_WRAPPED;
+	} );
 
 	return engine;
 };
