@@ -143,20 +143,25 @@ var optcall = function optcall( engine, context ){
 
 	if( typeof engine == FUNCTION ){
 		optcall( engine.prototype, context );
-	}
 
-	if( typeof engine == OBJECT && typeof engine.parent == FUNCTION ){
-		context = context || engine;
-
-		optcall( engine.parent, context );
+		return engine;
 	}
 
 	if( !context ){
 		return engine;
 	}
 
-	if( typeof engine == OBJECT ){
-		engine = engine.constructor.prototype;
+	if( typeof engine == OBJECT && typeof engine.parent == FUNCTION ){
+		context = context || engine;
+
+		optcall( engine.parent.prototype, context );
+	}
+
+	if( typeof engine == OBJECT &&
+		typeof engine.constructor == FUNCTION &&
+		typeof engine.constructor.prototype == OBJECT )
+	{
+		optcall( engine.constructor.prototype, context );
 	}
 
 	Object.getOwnPropertyNames( engine )
