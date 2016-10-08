@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "dependencies": {
     "async": {
       "version": "2.0.1",
@@ -289,7 +289,7 @@
       "from": "harden@latest"
     },
     "olivant": {
-      "version": "0.8.0",
+      "version": "0.8.2",
       "from": "olivant@latest",
       "dependencies": {
         "asea": {
@@ -298,8 +298,8 @@
           "resolved": "https://registry.npmjs.org/asea/-/asea-0.1.2.tgz"
         },
         "blacksea": {
-          "version": "0.0.3",
-          "from": "blacksea@0.0.3",
+          "version": "0.0.4",
+          "from": "blacksea@0.0.4",
           "dependencies": {
             "exorcise": {
               "version": "0.0.2",
@@ -358,8 +358,8 @@
           }
         },
         "dexist": {
-          "version": "0.0.3",
-          "from": "dexist@0.0.3",
+          "version": "0.0.4",
+          "from": "dexist@0.0.4",
           "dependencies": {
             "pedon": {
               "version": "0.0.1",
@@ -405,8 +405,8 @@
           }
         },
         "heredito": {
-          "version": "0.8.0",
-          "from": "heredito@0.8.0"
+          "version": "0.9.0",
+          "from": "heredito@0.9.0"
         },
         "meek": {
           "version": "0.1.4",
@@ -437,8 +437,8 @@
           "from": "raze@0.0.8"
         },
         "redsea": {
-          "version": "0.0.3",
-          "from": "redsea@0.0.3",
+          "version": "0.0.4",
+          "from": "redsea@0.0.4",
           "dependencies": {
             "exorcise": {
               "version": "0.0.2",
@@ -449,17 +449,6 @@
         "segway": {
           "version": "0.1.1",
           "from": "segway@0.1.1"
-        },
-        "snapd": {
-          "version": "0.0.5",
-          "from": "snapd@0.0.5",
-          "dependencies": {
-            "zelf": {
-              "version": "0.0.4",
-              "from": "zelf@0.0.4",
-              "resolved": "https://registry.npmjs.org/zelf/-/zelf-0.0.4.tgz"
-            }
-          }
         },
         "stacktrace-js": {
           "version": "1.3.1",
@@ -545,7 +534,8 @@
       "dependencies": {
         "asea": {
           "version": "0.1.2",
-          "from": "asea@>=0.1.2 <0.2.0"
+          "from": "asea@0.1.2",
+          "resolved": "https://registry.npmjs.org/asea/-/asea-0.1.2.tgz"
         },
         "budge": {
           "version": "0.0.1",
@@ -559,7 +549,8 @@
         },
         "zelf": {
           "version": "0.0.4",
-          "from": "zelf@0.0.4"
+          "from": "zelf@0.0.4",
+          "resolved": "https://registry.npmjs.org/zelf/-/zelf-0.0.4.tgz"
         }
       }
     }
