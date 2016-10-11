@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "dependencies": {
     "async": {
       "version": "2.0.1",
@@ -267,7 +267,7 @@
       }
     },
     "glucose": {
-      "version": "0.1.3",
+      "version": "0.2.0",
       "from": "glucose@latest",
       "dependencies": {
         "zelf": {
@@ -289,7 +289,7 @@
       "from": "harden@latest"
     },
     "olivant": {
-      "version": "0.8.2",
+      "version": "0.8.3",
       "from": "olivant@latest",
       "dependencies": {
         "asea": {

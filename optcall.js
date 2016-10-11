@@ -307,10 +307,18 @@ harden.bind( optcall )
 
 								delete this.chainTimeout;
 								delete this.chainMode;
+
+								snapd( function clear( ){
+									option.clear( );
+								} );
 							} ).bind( this ) );
 					} ).timeout;
 
 			}else{
+				snapd( function clear( ){
+					option.clear( );
+				} );
+
 				return method.bind( self )
 					( self.option, called( function onResult( issue, result, option ){
 						option.result = result;
