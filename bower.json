@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
   "authors": [
@@ -26,7 +26,7 @@
     "harden": "^0.3.5",
     "optfor": "^0.2.0",
     "snapd": "^0.1.0",
-    "glucose": "^0.2.0",
-    "olivant": "^0.8.3"
+    "glucose": "^0.2.1",
+    "olivant": "^0.8.4"
   }
 }

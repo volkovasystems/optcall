@@ -199,6 +199,23 @@ var optcall = function optcall( engine, context ){
 };
 
 harden.bind( optcall )
+	( "transfer", function transfer( option, choice ) {
+		for( let property in choice ){
+			option[ property ] = choice[ property ];
+		}
+
+		if( typeof option.mix == FUNCTION ){
+			option.mix( choice );
+
+		}else{
+			Warning( "cannot mix cache", option, choice )
+				.prompt( );
+		}
+
+		return optcall;
+	} );
+
+harden.bind( optcall )
 	( "wrap", function wrap( method ){
 		let property = method.name;
 
@@ -221,9 +238,7 @@ harden.bind( optcall )
 			self.option = self.option || option;
 			self.option = glucose.bind( self )( self.option );
 
-			for( let property in option ){
-				self.option[ property ] = option[ property ];
-			}
+			optcall.transfer( self.option, option );
 
 			callback = optfor( arguments, FUNCTION );
 			callback = called.bind( self )( callback );
@@ -264,13 +279,13 @@ harden.bind( optcall )
 
 											resultList.push( result );
 
+											optcall.transfer( this.option, option );
+
 											if( call.callback ){
 												call.callback( issue, result, option );
 											}
 
-											for( let property in option ){
-												this.option[ property ] = option[ property ];
-											}
+											optcall.transfer( this.option, option );
 
 											if( issue ){
 												tellback( issue );
