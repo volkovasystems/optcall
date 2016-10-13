@@ -334,16 +334,28 @@ harden.bind( optcall )
 								delete this.chainTimeout;
 								delete this.chainMode;
 
-								snapd( function clear( ){
+								if( this.clearTimeout ){
+									clearTimeout( this.clearTimeout );
+
+									delete this.clearTimeout;
+								}
+
+								this.clearTimeout = snapd( function clear( ){
 									option.clear( );
-								} );
+								} ).timeout;
 							} ).bind( this ) );
 					} ).timeout;
 
 			}else{
-				snapd( function clear( ){
+				if( self.clearTimeout ){
+					clearTimeout( self.clearTimeout );
+
+					delete self.clearTimeout;
+				}
+
+				self.clearTimeout = snapd( function clear( ){
 					option.clear( );
-				} );
+				} ).timeout;
 
 				return method.bind( self )
 					( self.option, called.bind( self )

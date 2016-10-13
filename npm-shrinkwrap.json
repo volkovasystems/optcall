@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "dependencies": {
     "async": {
       "version": "2.0.1",
@@ -289,7 +289,7 @@
       "from": "harden@latest"
     },
     "olivant": {
-      "version": "0.8.6",
+      "version": "0.8.7",
       "from": "olivant@latest",
       "dependencies": {
         "asea": {
