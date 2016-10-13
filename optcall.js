@@ -200,6 +200,17 @@ var optcall = function optcall( engine, context ){
 
 harden.bind( optcall )
 	( "transfer", function transfer( option, choice ) {
+		if( typeof choice == UNDEFINED ||
+			choice === null ||
+			!Object.keys( choice ).length )
+		{
+			Warning( "cannot transfer option", choice, option )
+				.remind( "option to be transferred is empty" )
+				.prompt( );
+
+			return optcall;
+		}
+
 		for( let property in choice ){
 			option[ property ] = choice[ property ];
 		}
@@ -234,7 +245,7 @@ harden.bind( optcall )
 						can override the instance option.
 				@end-note
 			*/
-			option = optfor( arguments, OBJECT );
+			option = optfor( arguments, OBJECT ) || { };
 			self.option = self.option || option;
 			self.option = glucose.bind( self )( self.option );
 
@@ -335,11 +346,14 @@ harden.bind( optcall )
 				} );
 
 				return method.bind( self )
-					( self.option, called( function onResult( issue, result, option ){
-						option.result = result;
+					( self.option, called.bind( self )
+						( function onResult( issue, result, option ){
+							option.result = result;
 
-						callback( issue, result, option );
-					} ) );
+							optcall.transfer( this.option, option );
+
+							callback( issue, result, option );
+						} ) );
 			}
 
 			return self;
