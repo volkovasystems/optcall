@@ -50,6 +50,7 @@
 			"ate": "ate",
 			"async": "async",
 			"called": "called",
+			"empt": "empt",
 			"harden": "harden",
 			"glucose": "glucose",
 			"Olivant": "olivant",
@@ -62,6 +63,7 @@
 if( typeof window == "undefined" ){
 	var ate = require( "ate" );
 	var called = require( "called" );
+	var empt = require( "empt" );
 	var harden = require( "harden" );
 	var glucose = require( "glucose" );
 	var Olivant = require( "olivant" );
@@ -202,10 +204,11 @@ harden.bind( optcall )
 	( "transfer", function transfer( option, choice ) {
 		if( typeof choice == UNDEFINED ||
 			choice === null ||
-			!Object.keys( choice ).length )
+			empt( choice ) )
 		{
 			Warning( "cannot transfer option", choice, option )
 				.remind( "option to be transferred is empty" )
+				.silence( )
 				.prompt( );
 
 			return optcall;
@@ -349,6 +352,8 @@ harden.bind( optcall )
 								this.clearTimeout = snapd.bind( this )
 									( function clear( ){
 										this.option.clear( );
+
+										Record( "option cache cleared", this.option.cache );
 									}, 1000 * 1 ).timeout;
 							} ).bind( this ) );
 					} ).timeout;
@@ -363,6 +368,8 @@ harden.bind( optcall )
 				self.clearTimeout = snapd.bind( self )
 					( function clear( ){
 						this.option.clear( );
+
+						Record( "option cache cleared", this.option.cache );
 					}, 1000 * 1 ).timeout;
 
 				return method.bind( self )
