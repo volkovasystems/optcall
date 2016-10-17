@@ -285,6 +285,7 @@ harden.bind( optcall )
 									let done = called.bind( this )
 										( function( issue, result, option ){
 											clearTimeout( call.timeout );
+											delete call.timeout;
 
 											option.result = result;
 
@@ -293,10 +294,8 @@ harden.bind( optcall )
 											optcall.transfer( this.option, option );
 
 											if( call.callback ){
-												call.callback( issue, result, option );
+												call.callback( issue, result, this.option );
 											}
-
-											optcall.transfer( this.option, option );
 
 											if( issue ){
 												tellback( issue );
@@ -310,7 +309,8 @@ harden.bind( optcall )
 										( function fallback( ){
 											Issue( "failed to call callback", call.method )
 												.remind( "possible delay of execution" )
-												.prompt( "fallback due to callback failure", this.option )
+												.prompt( "fallback due to callback failure",
+													this.option )
 												.report( )
 												.pass( done );
 										}, 1000 * 5 ).timeout;
@@ -321,14 +321,20 @@ harden.bind( optcall )
 
 							( function lastly( issue ){
 								if( callback ){
-									callback( issue, resultList.pop( ), option );
+									callback( issue, resultList.pop( ), this.option );
 
 								}else if( typeof this.emit == FUNCTION ){
-									this.emit( "done", issue, resultList.pop( ), option );
+									this.emit( "done", issue, resultList.pop( ), this.option );
 								}
 
 								while( this.callStack.length ){
-									this.callStack.pop( );
+									let call = this.callStack.pop( );
+
+									if( typeof call.timeout != UNDEFINED ){
+										clearTimeout( call.timeout );
+
+										delete call.timeout;
+									}
 								}
 
 								delete this.chainTimeout;
@@ -340,9 +346,10 @@ harden.bind( optcall )
 									delete this.clearTimeout;
 								}
 
-								this.clearTimeout = snapd( function clear( ){
-									option.clear( );
-								} ).timeout;
+								this.clearTimeout = snapd.bind( this )
+									( function clear( ){
+										this.option.clear( );
+									}, 1000 * 1 ).timeout;
 							} ).bind( this ) );
 					} ).timeout;
 
@@ -353,9 +360,10 @@ harden.bind( optcall )
 					delete self.clearTimeout;
 				}
 
-				self.clearTimeout = snapd( function clear( ){
-					option.clear( );
-				} ).timeout;
+				self.clearTimeout = snapd.bind( self )
+					( function clear( ){
+						this.option.clear( );
+					}, 1000 * 1 ).timeout;
 
 				return method.bind( self )
 					( self.option, called.bind( self )
@@ -364,7 +372,7 @@ harden.bind( optcall )
 
 							optcall.transfer( this.option, option );
 
-							callback( issue, result, option );
+							callback( issue, result, this.option );
 						} ) );
 			}
 
