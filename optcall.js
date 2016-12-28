@@ -50,181 +50,103 @@
 			"ate": "ate",
 			"async": "async",
 			"called": "called",
-			"empt": "empt",
+			"falzy": "falzy",
 			"harden": "harden",
 			"glucose": "glucose",
+			"proplist": "proplist",
+			"protease": "protease",
+			"protype": "protype",
 			"Olivant": "olivant",
 			"optfor": "optfor",
-			"snapd": "snapd"
+			"snapd": "snapd",
+			"truly": "truly"
 		}
 	@end-include
 */
 
-if( typeof window == "undefined" ){
-	var ate = require( "ate" );
-	var called = require( "called" );
-	var empt = require( "empt" );
-	var harden = require( "harden" );
-	var glucose = require( "glucose" );
-	var Olivant = require( "olivant" );
-	var optfor = require( "optfor" );
-	var snapd = require( "snapd" );
-	var series = require( "async" ).series;
-}
+const ate = require( "ate" );
+const called = require( "called" );
+const falzy = require( "falzy" );
+const harden = require( "harden" );
+const glucose = require( "glucose" );
+const Olivant = require( "olivant" );
+const optfor = require( "optfor" );
+const proplist = require( "proplist" );
+const protease = require( "protease" );
+const protype = require( "protype" );
+const snapd = require( "snapd" );
+const series = require( "async" ).series;
+const truly = require( "truly" );
 
-if( typeof window != "undefined" &&
-	!( "ate" in window ) )
-{
-	throw new Error( "ate is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "called" in window ) )
-{
-	throw new Error( "called is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "harden" in window ) )
-{
-	throw new Error( "harden is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "glucose" in window ) )
-{
-	throw new Error( "glucose is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "optfor" in window ) )
-{
-	throw new Error( "optfor is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "Olivant" in window ) )
-{
-	throw new Error( "Olivant is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "snapd" in window ) )
-{
-	throw new Error( "snapd is not defined" );
-}
-
-if( typeof window != "undefined" &&
-	!( "async" in window ) )
-{
-	throw new Error( "async is not defined" );
-
-}else if( typeof window != "undefined" &&
-	"async" in window )
-{
-	var series = window.async.series;
-}
-
-harden( "OPTCALL_DELEGATED", "optcall-delegate" );
+harden( "OPTCALL_DELEGATED", "optcall-delegated" );
 harden( "OPTCALL_WRAPPED", "optcall-wrapped" );
 
-var optcall = function optcall( engine, context ){
+const optcall = function optcall( engine ){
 	/*;
 		@meta-configuration:
 			{
 				"engine:required": [
 					"object",
 					"function"
-				],
-				"context": "object"
+				]
 			}
 		@end-meta-configuration
 	*/
 
-	engine = optfor( arguments, FUNCTION ) || engine;
-
-	if( typeof engine == OBJECT ){
-		if( engine.OPTCALL_WRAPPED == OPTCALL_WRAPPED ){
-			return engine;
-
-		}else{
-			ate( "OPTCALL_WRAPPED", OPTCALL_WRAPPED, engine );
-		}
+	if( falzy( engine ) ){
+		throw new Error( "engine not given" );
 	}
 
-	context = context || optfor( arguments, OBJECT );
+	protease( engine )
+		.forEach( function onEachPrototype( prototype ){
+			if( prototype.OPTCALL_WRAPPED !== OPTCALL_WRAPPED ){
+				ate( "OPTCALL_WRAPPED", OPTCALL_WRAPPED, prototype );
+			}
 
-	if( typeof engine == FUNCTION ){
-		optcall( engine.prototype, context );
+			snapd( function clear( ){ delete prototype.OPTCALL_WRAPPED; } );
 
-		return engine;
-	}
+			proplist( prototype )
+				.forEach( function onEachDefinition( definition ){
+					let { property, type, value } = definition;
 
-	if( !context ){
-		return engine;
-	}
-
-	if( typeof engine == OBJECT && typeof engine.parent == FUNCTION ){
-		context = context || engine;
-
-		optcall( engine.parent.prototype, context );
-	}
-
-	if( typeof engine == OBJECT &&
-		typeof engine.constructor == FUNCTION &&
-		typeof engine.constructor.prototype == OBJECT )
-	{
-		optcall( engine.constructor.prototype, context );
-	}
-
-	Object.getOwnPropertyNames( engine )
-		.filter( function onEachProperty( property ){
-			return ( typeof engine[ property ] == "function" );
-		} )
-		.map( function onEachProperty( property ){
-			return engine[ property ];
-		} )
-		.filter( function onEachMethod( method ){
-			return optcall.FUNCTION_PATTERN.test( method.toString( ) );
-		} )
-		.forEach( function onEachMethod( method ){
-			let property = method.name;
-
-			context[ property ] = optcall.wrap( method );
+					if( type == METHOD && optcall.FUNCTION_PATTERN.test( value ) ){
+						prototype[ property ] = optcall.wrap( value );
+					}
+				} );
 		} );
-
-	snapd( function clear( ){
-		delete engine.OPTCALL_WRAPPED;
-	} );
 
 	return engine;
 };
 
 harden.bind( optcall )
-	( "transfer", function transfer( option, choice ) {
-		if( typeof choice == UNDEFINED ||
-			choice === null ||
-			empt( choice ) )
-		{
-			Warning( "cannot transfer option", choice, option )
-				.remind( "option to be transferred is empty" )
-				.silence( )
-				.prompt( );
+	( "flushCallStack", function flushCallStack( self ){
+		while( self.callStack.length ){
+			let call = self.callStack.pop( );
 
-			return optcall;
+			if( truly( call.timeout ) ){
+				clearTimeout( call.timeout );
+
+				delete call.timeout;
+			}
 		}
 
-		for( let property in choice ){
-			option[ property ] = choice[ property ];
+		return optcall;
+	} );
+
+harden.bind( optcall )
+	( "clearOption", function clearOption( self ){
+		if( truly( self.clearTimeout ) ){
+			clearTimeout( self.clearTimeout );
+
+			delete self.clearTimeout;
 		}
 
-		if( typeof option.mix == FUNCTION ){
-			option.mix( choice );
+		self.clearTimeout = snapd.bind( self )
+			( function clear( ){
+				this.option.clear( );
 
-		}else{
-			Warning( "cannot mix cache", option, choice )
-				.prompt( );
-		}
+				Record( "option cache cleared", this.option.cache );
+			}, 1000 * 1 ).timeout;
 
 		return optcall;
 	} );
@@ -238,33 +160,27 @@ harden.bind( optcall )
 		}
 
 		let delegate = function delegate( option, callback ){
-			option = option || { };
-
+			option = optfor( arguments, OBJECT ) || { };
 			let self = option.self || this;
 
-			/*;
-				@note:
-					This should be clear, the option given by individual method
-						can override the instance option.
-				@end-note
-			*/
-			option = optfor( arguments, OBJECT ) || { };
 			self.option = self.option || option;
 			self.option = glucose.bind( self )( self.option );
 
-			optcall.transfer( self.option, option );
+			option = glucose.bind( self )( option );
+
+			self.option.mix( option );
 
 			callback = optfor( arguments, FUNCTION );
 			callback = called.bind( self )( callback );
 
 			if( self.chainMode === true ){
-				if( self.chainTimeout ){
+				if( truly( self.chainTimeout ) ){
 					clearTimeout( self.chainTimeout );
 
 					delete self.chainTimeout;
 				}
 
-				if( !( "callStack" in self ) ){
+				if( falzy( self.callStack ) ){
 					harden( "callStack", [ ], self );
 				}
 
@@ -286,21 +202,24 @@ harden.bind( optcall )
 
 								return ( function delegate( tellback ){
 									let done = called.bind( this )
-										( function( issue, result, option ){
-											clearTimeout( call.timeout );
-											delete call.timeout;
+										( function callbackDelegate( issue, result, option ){
+											if( truly( call.timeout ) ){
+												clearTimeout( call.timeout );
+
+												delete call.timeout;
+											}
 
 											option.result = result;
 
 											resultList.push( result );
 
-											optcall.transfer( this.option, option );
+											this.option.mix( option );
 
-											if( call.callback ){
-												call.callback( issue, result, this.option );
+											if( truly( call.callback ) ){
+												call.callback( issue, result, option );
 											}
 
-											if( issue ){
+											if( truly( issue ) ){
 												tellback( issue );
 
 											}else{
@@ -323,74 +242,44 @@ harden.bind( optcall )
 							} ).bind( this ) ),
 
 							( function lastly( issue ){
-								if( callback ){
+								if( truly( callback ) ){
 									callback( issue, resultList.pop( ), this.option );
 
-								}else if( typeof this.emit == FUNCTION ){
+								}else if( protype( this.emit, FUNCTION ) ){
 									this.emit( "done", issue, resultList.pop( ), this.option );
 								}
 
-								while( this.callStack.length ){
-									let call = this.callStack.pop( );
-
-									if( typeof call.timeout != UNDEFINED ){
-										clearTimeout( call.timeout );
-
-										delete call.timeout;
-									}
-								}
+								optcall.flushCallStack( this );
 
 								delete this.chainTimeout;
 								delete this.chainMode;
 
-								if( this.clearTimeout ){
-									clearTimeout( this.clearTimeout );
-
-									delete this.clearTimeout;
-								}
-
-								this.clearTimeout = snapd.bind( this )
-									( function clear( ){
-										this.option.clear( );
-
-										Record( "option cache cleared", this.option.cache );
-									}, 1000 * 1 ).timeout;
+								optcall.clearOption( this );
 							} ).bind( this ) );
 					} ).timeout;
 
 			}else{
-				if( self.clearTimeout ){
-					clearTimeout( self.clearTimeout );
-
-					delete self.clearTimeout;
-				}
-
-				self.clearTimeout = snapd.bind( self )
-					( function clear( ){
-						this.option.clear( );
-
-						Record( "option cache cleared", this.option.cache );
-					}, 1000 * 1 ).timeout;
+				optcall.clearOption( self );
 
 				return method.bind( self )
 					( self.option, called.bind( self )
 						( function onResult( issue, result, option ){
 							option.result = result;
 
-							optcall.transfer( this.option, option );
+							this.option.mix( option );
 
-							callback( issue, result, this.option );
+							callback( issue, result, option );
 						} ) );
 			}
 
 			return self;
 		};
 
-		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
-
-		harden( "method", method, delegate );
-
 		ate( "name", property, delegate );
+
+		ate( "method", method, delegate );
+
+		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
 
 		return delegate;
 	} );

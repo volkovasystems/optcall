@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
   "scripts": {
@@ -21,14 +21,15 @@
   },
   "homepage": "https://github.com/volkovasystems/optcall#readme",
   "dependencies": {
-    "async": "^2.0.1",
+    "async": "^2.1.2",
     "ate": "0.0.0",
     "called": "^0.1.2",
-    "empt": "0.0.0",
+    "empt": "0.0.3",
     "glucose": "^0.2.2",
     "harden": "^0.3.5",
     "olivant": "^0.8.8",
     "optfor": "^0.2.0",
+    "protease": "0.0.0",
     "snapd": "^0.1.0"
   }
 }
