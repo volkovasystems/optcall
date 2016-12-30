@@ -3,8 +3,10 @@
   "version": "0.5.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
+  "support": "optcall.support.js",
+  "deploy": "optcall.deploy.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha optcall-test.js"
   },
   "repository": {
     "type": "git",
@@ -15,21 +17,27 @@
     "optcall"
   ],
   "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "contributors": [
+    "John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/volkovasystems/optcall/issues"
   },
   "homepage": "https://github.com/volkovasystems/optcall#readme",
   "dependencies": {
-    "async": "^2.1.2",
-    "ate": "0.0.0",
-    "called": "^0.1.2",
-    "empt": "0.0.3",
-    "glucose": "^0.2.2",
-    "harden": "^0.3.5",
-    "olivant": "^0.8.8",
-    "optfor": "^0.2.0",
-    "protease": "0.0.0",
-    "snapd": "^0.1.0"
+    "async": "^2.1.4",
+    "ate": "^0.4.0",
+    "called": "^0.5.0",
+    "falzy": "^0.7.0",
+    "glucose": "^0.6.0",
+    "harden": "^0.12.0",
+    "olivant": "^0.8.9",
+    "optfor": "^0.6.0",
+    "proplist": "^0.4.0",
+    "protease": "^0.3.0",
+    "protype": "^0.7.0",
+    "snapd": "^0.5.0",
+    "truly": "^0.5.0"
   }
 }
