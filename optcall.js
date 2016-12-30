@@ -112,7 +112,7 @@ const optcall = function optcall( engine ){
 				.forEach( function onEachDefinition( definition ){
 					let { property, type, value } = definition;
 
-					if( type == METHOD && optcall.FUNCTION_PATTERN.test( value ) ){
+					if( type == FUNCTION && optcall.FUNCTION_PATTERN.test( value ) ){
 						prototype[ property ] = optcall.wrap( value );
 					}
 				} );
