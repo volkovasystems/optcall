@@ -9,6 +9,8 @@ Computation.prototype.initialize = function initialize( option, callback ){
 
     this.chainMode = true;
 
+    optcall( this );
+
     return this;
 
 };
@@ -41,8 +43,6 @@ Computation.prototype.done = function done( option, callback ) {
     return this;
 
 };
-
-optcall( Computation );
 
 
 Computation( )
