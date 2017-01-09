@@ -7,20 +7,15 @@ const Computation = diatom( "Computation" );
 
 Computation.prototype.initialize = function initialize( option, callback ){
 
-    this.chainMode = true;
-
-    optcall( this );
-
     return this;
 
 };
 
 
 Computation.prototype.compute = function compute( option, callback ) {
+	console.log( "compute" );
 
-    console.log( "compute" );
-
-    callback( null, null, {} );
+    callback( null, null, option );
 
     return this;
 
@@ -40,18 +35,23 @@ Computation.prototype.done = function done( option, callback ) {
 
     console.log( "done" );
 
+	callback( null, null, option );
+
     return this;
 
 };
 
+optcall( Computation );
 
-Computation( )
+
+Computation( { "yeah": "ugh" } )
+	.chain( )
     .compute( function onCompute( issue, result, option ){
-        option.set( "hello", "world" );
+		option.set( "hello", "world" );
     } )
     .applySomeThing( function onApplySomething( issue, result, option ){
         console.log( option.get( "hello" ) );
     } )
-    .done( function onDone() {
-        console.log( "complete" )
+    .done( function onDone( issue, result, option ) {
+        console.log( "complete", option );
     } );

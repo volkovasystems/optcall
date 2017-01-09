@@ -46,42 +46,39 @@
 
 	@module-documentation:
 		Delegate option-callback procedures.
+
+		This method will insert helper methods, chain, release and chained to the class.
 	@end-module-documentation
 
 	@include:
 		{
 			"ate": "ate",
-			"async": "async",
-			"called": "called",
+			"clazof": "clazof",
 			"falzy": "falzy",
 			"harden": "harden",
-			"glucose": "glucose",
 			"proplist": "proplist",
 			"protease": "protease",
 			"protype": "protype",
-			"Olivant": "olivant",
-			"optfor": "optfor",
 			"snapd": "snapd",
-			"truly": "truly"
+			"vound": "vound"
 		}
 	@end-include
 */
 
 const ate = require( "ate" );
-const called = require( "called" );
+const clazof = require( "clazof" );
 const falzy = require( "falzy" );
 const harden = require( "harden" );
-const glucose = require( "glucose" );
-const Olivant = require( "olivant" );
-const optfor = require( "optfor" );
 const proplist = require( "proplist" );
 const protease = require( "protease" );
 const protype = require( "protype" );
 const snapd = require( "snapd" );
-const series = require( "async" ).series;
-const truly = require( "truly" );
+const vound = require( "vound" );
 
-harden( "OPTCALL_DELEGATED", "optcall-delegated" );
+const wrap = require( "./wrap.js" );
+const FUNCTION_PATTERN = /^function\s+([a-z_$][a-zA-Z0-9_$]+)?\s*\(\s*option\s*\,\s*callback\s*\)/;
+
+harden( "CHAIN_MODE", Symbol.for( "chain-mode" ) );
 harden( "OPTCALL_WRAPPED", "optcall-wrapped" );
 
 const optcall = function optcall( engine ){
@@ -112,183 +109,49 @@ const optcall = function optcall( engine ){
 				.forEach( function onEachDefinition( definition ){
 					let { property, type, value } = definition;
 
-					if( type == FUNCTION && optcall.FUNCTION_PATTERN.test( value ) ){
-						prototype[ property ] = optcall.wrap( value );
+					if( type == FUNCTION && FUNCTION_PATTERN.test( value ) ){
+						prototype[ property ] = wrap( value );
 					}
 				} );
 		} );
 
+	/*;
+		@note:
+			Attach helper methods.
+		@end-note
+	*/
+	let chain = function chain( ){
+		this[ CHAIN_MODE ] = true;
+
+		return this;
+	};
+
+	let release = function release( ){
+		this[ CHAIN_MODE ] = false;
+
+		return this;
+	};
+
+	let chained = function chained( ){
+		return ( this[ CHAIN_MODE ] || false );
+	};
+
+	if( protype( engine, FUNCTION ) ){
+		engine.prototype.chain = chain;
+		engine.prototype.release = release;
+		engine.prototype.chained = chained;
+
+	}else if( protype( engine, OBJECT ) && clazof( engine, engine.constructor ) ){
+		engine.constructor.prototype.chain = chain;
+		engine.constructor.prototype.release = release;
+		engine.constructor.prototype.chained = chained;
+
+		engine.chain = vound( chain, engine );
+		engine.release = vound( release, engine );
+		engine.chained = vound( chained, engine );
+	}
+
 	return engine;
 };
-
-harden.bind( optcall )
-	( "flushCallStack", function flushCallStack( self ){
-		while( self.callStack.length ){
-			let call = self.callStack.pop( );
-
-			if( truly( call.timeout ) ){
-				clearTimeout( call.timeout );
-
-				delete call.timeout;
-			}
-		}
-
-		return optcall;
-	} );
-
-harden.bind( optcall )
-	( "clearOption", function clearOption( self ){
-		if( truly( self.clearTimeout ) ){
-			clearTimeout( self.clearTimeout );
-
-			delete self.clearTimeout;
-		}
-
-		self.clearTimeout = snapd.bind( self )
-			( function clear( ){
-				this.option.clear( );
-
-				Record( "option cache cleared", this.option.cache );
-			}, 1000 * 1 ).timeout;
-
-		return optcall;
-	} );
-
-harden.bind( optcall )
-	( "wrap", function wrap( method ){
-		let property = method.name;
-
-		if( method.OPTCALL_DELEGATED === OPTCALL_DELEGATED ){
-			return method;
-		}
-
-		let delegate = function delegate( option, callback ){
-			option = optfor( arguments, OBJECT ) || { };
-			let self = option.self || this;
-
-			self.option = self.option || option;
-			self.option = glucose.bind( self )( self.option );
-
-			option = glucose.bind( self )( option );
-
-			self.option.mix( option );
-
-			callback = optfor( arguments, FUNCTION );
-			callback = called.bind( self )( callback );
-
-			if( self.chainMode === true ){
-				if( truly( self.chainTimeout ) ){
-					clearTimeout( self.chainTimeout );
-
-					delete self.chainTimeout;
-				}
-
-				if( falzy( self.callStack ) ){
-					harden( "callStack", [ ], self );
-				}
-
-				self.callStack.push( {
-					"self": self,
-					"method": method,
-					"callback": callback
-				} );
-
-				self.chainTimeout = snapd.bind( self )
-					( function chain( ){
-						let resultList = [ ];
-
-						let callback = called.bind( this )( );
-
-						series( this.callStack
-							.map( ( function onEachCall( call ){
-								callback = call.callback;
-
-								return ( function delegate( tellback ){
-									let done = called.bind( this )
-										( function callbackDelegate( issue, result, option ){
-											if( truly( call.timeout ) ){
-												clearTimeout( call.timeout );
-
-												delete call.timeout;
-											}
-
-											option.result = result;
-
-											resultList.push( result );
-
-											this.option.mix( option );
-
-											if( truly( call.callback ) ){
-												call.callback( issue, result, option );
-											}
-
-											if( truly( issue ) ){
-												tellback( issue );
-
-											}else{
-												tellback( );
-											}
-										} );
-
-									call.timeout = snapd.bind( this )
-										( function fallback( ){
-											Issue( "failed to call callback", call.method )
-												.remind( "possible delay of execution" )
-												.prompt( "fallback due to callback failure",
-													this.option )
-												.report( )
-												.pass( done );
-										}, 1000 * 5 ).timeout;
-
-									call.method.bind( this )( this.option, done );
-								} ).bind( this );
-							} ).bind( this ) ),
-
-							( function lastly( issue ){
-								if( truly( callback ) ){
-									callback( issue, resultList.pop( ), this.option );
-
-								}else if( protype( this.emit, FUNCTION ) ){
-									this.emit( "done", issue, resultList.pop( ), this.option );
-								}
-
-								optcall.flushCallStack( this );
-
-								delete this.chainTimeout;
-								delete this.chainMode;
-
-								optcall.clearOption( this );
-							} ).bind( this ) );
-					} ).timeout;
-
-			}else{
-				optcall.clearOption( self );
-
-				return method.bind( self )
-					( self.option, called.bind( self )
-						( function onResult( issue, result, option ){
-							option.result = result;
-
-							this.option.mix( option );
-
-							callback( issue, result, option );
-						} ) );
-			}
-
-			return self;
-		};
-
-		ate( "name", property, delegate );
-
-		ate( "method", method, delegate );
-
-		harden( "OPTCALL_DELEGATED", OPTCALL_DELEGATED, delegate );
-
-		return delegate;
-	} );
-
-harden.bind( optcall )
-	( "FUNCTION_PATTERN",
-		/^function\s+([a-z_$][a-zA-Z0-9_$]+)?\s*\(\s*option\s*\,\s*callback\s*\)/ );
 
 module.exports = optcall;
