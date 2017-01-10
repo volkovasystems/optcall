@@ -1265,9 +1265,9 @@ globals@^9.0.0:
   version "9.14.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-9.14.0.tgz#8859936af0038741263053b39d0e76ca241e4034"
 
-glucose@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/glucose/-/glucose-0.8.0.tgz#d6ed321756c6152285a8dc03c877128ea4fae371"
+glucose@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/glucose/-/glucose-0.9.0.tgz#dc6055874dceb83fdd22a49f01c43c4492059c45"
   dependencies:
     clazof "^0.2.0"
     diatom "^0.4.0"
@@ -1277,7 +1277,7 @@ glucose@^0.8.0:
     kein "^0.2.0"
     protype "^0.8.0"
     stuffed "^0.2.0"
-    transpher "0.0.0"
+    transpher "^0.2.0"
     truly "^0.5.0"
     zelf "^0.4.0"
 
@@ -1466,7 +1466,7 @@ is-number@^2.0.2, is-number@^2.1.0:
 
 is-posix-bracket@^0.1.0:
   version "0.1.1"
-  resolved "http://registry.npmjs.org/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
+  resolved "https://registry.yarnpkg.com/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
 
 is-primitive@^2.0.0:
   version "2.0.0"
@@ -1554,7 +1554,7 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
-kloak@0.0.0, kloak@^0.0.0:
+kloak@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/kloak/-/kloak-0.0.0.tgz#cc26f911e22ac5f6357761c70d87b2f12ad1b4e1"
   dependencies:
@@ -1566,6 +1566,20 @@ kloak@0.0.0, kloak@^0.0.0:
     kein "^0.2.0"
     protype "^0.8.0"
     transpher "0.0.0"
+    truly "^0.5.0"
+
+kloak@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/kloak/-/kloak-0.1.0.tgz#14250397b223245970b0c007e6156c5715d7bf89"
+  dependencies:
+    ate "^0.5.0"
+    babel-runtime "^6.20.0"
+    cobralize "^0.3.0"
+    falzy "^0.7.0"
+    harden "^0.13.0"
+    kein "^0.2.0"
+    protype "^0.8.0"
+    transpher "^0.1.0"
     truly "^0.5.0"
 
 komento@^0.9.0:
@@ -1960,14 +1974,14 @@ proplist@^0.5.0:
     babel-runtime "^6.20.0"
     meto "^0.2.0"
 
-protease@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/protease/-/protease-0.4.0.tgz#75598417ee1814e0bf51116370130b4837ca02bb"
+protease@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/protease/-/protease-0.5.0.tgz#713823eabf7dcf2619704ff4b5f6e039d299c61d"
   dependencies:
     babel-runtime "^6.20.0"
     falzy "^0.7.0"
-    harden "^0.12.0"
-    protype "^0.7.0"
+    harden "^0.13.0"
+    protype "^0.8.0"
 
 protype@^0.7.0:
   version "0.7.0"
@@ -2415,11 +2429,27 @@ tough-cookie@~2.3.0:
   dependencies:
     punycode "^1.4.1"
 
-transpher@0.0.0, transpher@^0.0.0:
+transpher@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/transpher/-/transpher-0.0.0.tgz#ce2b13e91357734df860f0c2ea175d8c5ddef8fa"
   dependencies:
     ate "^0.4.0"
+    babel-runtime "^6.20.0"
+    falzy "^0.7.0"
+
+transpher@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/transpher/-/transpher-0.1.0.tgz#72ef1df0d85f15face9f0b79c7aa8bba14d95cdc"
+  dependencies:
+    ate "^0.5.0"
+    babel-runtime "^6.20.0"
+    falzy "^0.7.0"
+
+transpher@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/transpher/-/transpher-0.2.0.tgz#2353a77262ac1729ddae974f0206800281ff70e5"
+  dependencies:
+    ate "^0.5.0"
     babel-runtime "^6.20.0"
     falzy "^0.7.0"
 
