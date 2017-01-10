@@ -101,9 +101,12 @@ const optcall = function optcall( engine ){
 		.forEach( function onEachPrototype( prototype ){
 			if( prototype.OPTCALL_WRAPPED !== OPTCALL_WRAPPED ){
 				ate( "OPTCALL_WRAPPED", OPTCALL_WRAPPED, prototype );
+
+			}else{
+				return;
 			}
 
-			snapd( function clear( ){ delete prototype.OPTCALL_WRAPPED; } );
+			snapd.bind( prototype )( function clear( ){ delete prototype.OPTCALL_WRAPPED; } );
 
 			proplist( prototype )
 				.forEach( function onEachDefinition( definition ){

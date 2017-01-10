@@ -134,6 +134,15 @@ ate@^0.4.0:
     protype "^0.7.0"
     zelf "^0.4.0"
 
+ate@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ate/-/ate-0.5.0.tgz#95cfade6cde86dbf279f78e335e326c7ac70762a"
+  dependencies:
+    babel-runtime "^6.20.0"
+    falzy "^0.7.0"
+    protype "^0.8.0"
+    zelf "^0.4.0"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
