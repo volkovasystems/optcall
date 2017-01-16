@@ -1,3 +1,5 @@
+"use strict";
+
 const webpack = require( "webpack" );
 const ResolverPlugin = webpack.ResolverPlugin;
 const DirectoryDescriptionFilePlugin = ResolverPlugin.DirectoryDescriptionFilePlugin;
@@ -24,6 +26,7 @@ module.exports = {
 	"plugins": [
 		new ResolverPlugin( new DirectoryDescriptionFilePlugin( "bower.json", [ "support" ] ) ),
 		new ResolverPlugin( new DirectoryDescriptionFilePlugin( ".bower.json", [ "main" ] ) ),
+		new ResolverPlugin( new DirectoryDescriptionFilePlugin( "package.json", [ "browser" ] ) ),
 		new UglifyJsPlugin( {
 			"compress": {
 				"keep_fargs": true,
