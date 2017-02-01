@@ -1,10 +1,11 @@
 {
   "name": "optcall",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
   "support": "optcall.support.js",
   "deploy": "optcall.deploy.js",
+  "browser": "optcall.deploy.js",
   "scripts": {
     "build": "babel optcall.js -o optcall.support.js && babel wrap.module.js -o wrap.js && webpack",
     "test": "mocha optcall-test.js"
@@ -28,32 +29,31 @@
   "homepage": "https://github.com/volkovasystems/optcall#readme",
   "dependencies": {
     "async": "^2.1.4",
-    "ate": "^0.5.0",
-    "babel-runtime": "^6.20.0",
-    "called": "^0.6.0",
-    "clazof": "^0.2.0",
-    "depher": "^0.5.0",
-    "falzy": "^0.7.0",
-    "glucose": "^0.9.0",
-    "harden": "^0.13.0",
-    "kloak": "^0.1.0",
-    "optfor": "^0.6.0",
-    "proplist": "^0.5.0",
-    "protease": "^0.5.0",
-    "protype": "^0.8.0",
-    "raze": "^0.6.0",
-    "snapd": "^0.9.0",
-    "transpher": "^0.2.0",
-    "truly": "^0.5.0",
-    "truu": "^0.4.0",
-    "vound": "^0.6.0"
+    "ate": "^0.8.0",
+    "called": "^0.10.0",
+    "clazof": "^0.5.0",
+    "depher": "^0.8.0",
+    "falzy": "^0.10.0",
+    "glucose": "^0.10.0",
+    "harden": "^0.14.0",
+    "kloak": "^0.4.0",
+    "optfor": "^0.10.0",
+    "proplist": "^0.6.0",
+    "protease": "^0.7.0",
+    "protype": "^0.11.0",
+    "raze": "^0.12.0",
+    "snapd": "^0.13.0",
+    "transpher": "^0.5.0",
+    "truly": "^0.9.0",
+    "truu": "^0.7.0",
+    "vound": "^0.8.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "^6.16.0",
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-latest": "^6.22.0",
     "source-map-loader": "^0.1.6",
-    "webpack": "^1.14.0"
+    "webpack": "^2.2.1"
   }
 }
