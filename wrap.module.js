@@ -145,15 +145,23 @@ const wrap = function wrap( method ){
 
 			self[ CHAIN_HANDLER ] = snapd.bind( self )
 				( function chain( ){
-					let resultList = [ ];
-
 					/*;
 						@todo:
 							We will drop usage to any async methods from third party modules.
 						@end-todo
 					*/
 					series( this[ CALL_STACK ]
-						.map( ( function onEachCall( call ){
+						.map( ( function onEachCall( call, index ){
+							/*;
+								@note:
+									The first call to the chained method will transfer
+										the properties to the main option.
+								@end-note
+							*/
+							if( index === 0 ){
+								call.option.transfer( this.option );
+							}
+
 							return ( function delegate( tellback ){
 								let done = called.bind( this )
 									( function done( issue, result, option ){
@@ -163,13 +171,17 @@ const wrap = function wrap( method ){
 
 										option.result = result;
 
-										resultList.push( result );
-
-										this.option.mix( option );
-
 										call.callback( issue, result, option );
 
-										tellback( issue, result, option );
+										/*;
+											@note:
+												This should be called after the callback.
+											@end-note
+										*/
+										this.option.mix( option );
+										this.option.result = option.result;
+
+										tellback( issue, result );
 									} );
 
 								call.handler = snapd.bind( this )
@@ -177,13 +189,21 @@ const wrap = function wrap( method ){
 										done( new Error( "failed to call callback" ) );
 									}, 1000 * 5 );
 
+								/*;
+									@note:
+										Succeeding calls must communicate through cache and result.
+									@end-note
+								*/
+								call.option.mix( this.option );
+								call.option.result = this.option.result;
+
 								let option = call.option.empty( )? this.option : call.option;
 
 								call.method.bind( this )( option, done );
 							} ).bind( this );
 						} ).bind( this ) ),
 
-						( function lastly( issue ){
+						( function lastly( issue, resultList ){
 							/*;
 								@note:
 									This will get the last callback from the chain.
@@ -191,10 +211,12 @@ const wrap = function wrap( method ){
 							*/
 							let callback = this[ CALL_STACK ].reverse( )[ 0 ].callback;
 
-							callback( issue, resultList.pop( ), this.option );
+							let result = resultList.pop( );
+
+							callback( issue, result, this.option );
 
 							if( protype( this.emit, FUNCTION ) ){
-								this.emit( "done", issue, resultList.pop( ), this.option );
+								this.emit( "done", issue, result, this.option );
 							}
 
 							while( this[ CALL_STACK ].length ){
@@ -221,6 +243,7 @@ const wrap = function wrap( method ){
 						option.result = result;
 
 						this.option.mix( option );
+						this.option.transfer( option );
 
 						callback( issue, result, option );
 					} ) );

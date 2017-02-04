@@ -7,13 +7,15 @@ const Computation = diatom( "Computation" );
 
 Computation.prototype.initialize = function initialize( option, callback ){
 
+	callback( null, null, option );
+
     return this;
 
 };
 
 
 Computation.prototype.compute = function compute( option, callback ) {
-	console.log( "compute" );
+	console.log( "compute", option );
 
     callback( null, null, option );
 
@@ -50,7 +52,7 @@ Computation( { "yeah": "ugh" } )
 		option.set( "hello", "world" );
     } )
     .applySomeThing( function onApplySomething( issue, result, option ){
-        console.log( option.get( "hello" ) );
+        console.log( "hello-world?", option.get( "hello" ) );
     } )
     .done( function onDone( issue, result, option ) {
         console.log( "complete", option );

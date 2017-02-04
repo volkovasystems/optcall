@@ -13,8 +13,8 @@ acorn-dynamic-import@^2.0.0:
     acorn "^4.0.3"
 
 acorn@^4.0.3, acorn@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.4.tgz#17a8d6a7a6c4ef538b814ec9abac2779293bf30a"
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.8.tgz#f41e52020ce78118a3c68ed0e9215eb8fc68b5b1"
 
 ajv-keywords@^1.1.1:
   version "1.5.1"
@@ -707,8 +707,8 @@ base64-js@^1.0.2:
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
 
 bcrypt-pbkdf@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.0.tgz#3ca76b85241c7170bf7d9703e7b9aa74630040d4"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz#63bc5dcb61331b92bc05fd528953c33462a06f8d"
   dependencies:
     tweetnacl "^0.14.3"
 
@@ -1351,8 +1351,8 @@ empt@^0.5.0:
     protype "^0.11.0"
 
 enhanced-resolve@^3.0.0:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-3.0.3.tgz#df14c06b5fc5eecade1094c9c5a12b4b3edc0b62"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-3.1.0.tgz#9f4b626f577245edcf4b2ad83d86e17f4f421dec"
   dependencies:
     graceful-fs "^4.1.2"
     memory-fs "^0.4.0"
@@ -1606,9 +1606,9 @@ globals@^9.0.0:
   version "9.14.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-9.14.0.tgz#8859936af0038741263053b39d0e76ca241e4034"
 
-glucose@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/glucose/-/glucose-0.10.0.tgz#4c85fdac64e2f244f44f81835d6fc448cecbbbe6"
+glucose@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/glucose/-/glucose-0.11.0.tgz#1e14005ddfab71bdb917d4a3df04847b34b075e0"
   dependencies:
     babel-runtime "^6.22.0"
     clazof "^0.5.0"
@@ -1622,6 +1622,7 @@ glucose@^0.10.0:
     stuffed "^0.4.0"
     transpher "^0.5.0"
     truly "^0.9.0"
+    truu "^0.7.0"
     zelf "^0.6.0"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.4:
@@ -2234,8 +2235,8 @@ node-libs-browser@^2.0.0:
     vm-browserify "0.0.4"
 
 node-pre-gyp@^0.6.29:
-  version "0.6.32"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.32.tgz#fc452b376e7319b3d255f5f34853ef6fd8fe1fd5"
+  version "0.6.33"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.33.tgz#640ac55198f6a925972e0c16c4ac26a034d5ecc9"
   dependencies:
     mkdirp "~0.5.1"
     nopt "~3.0.6"
@@ -2479,9 +2480,9 @@ proplist@^0.6.0:
     babel-runtime "^6.22.0"
     meto "^0.4.0"
 
-protease@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/protease/-/protease-0.7.0.tgz#c375da7a3972cc097645bf2df4eb077e92cf0524"
+protease@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/protease/-/protease-0.8.0.tgz#c84f618838095c3d353e79a841c1bee8e9bb8c6a"
   dependencies:
     babel-runtime "^6.22.0"
     falzy "^0.10.0"
