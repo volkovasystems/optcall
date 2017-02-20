@@ -1,75 +1,69 @@
 "use strict";
 
 /*;
-	@module-license:
-		The MIT License (MIT)
-		@mit-license
-
-		Copyright (@c) 2017 Richeve Siodina Bebedor
-		@email: richeve.bebedor@gmail.com
-
-		Permission is hereby granted, free of charge, to any person obtaining a copy
-		of this software and associated documentation files (the "Software"), to deal
-		in the Software without restriction, including without limitation the rights
-		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-		copies of the Software, and to permit persons to whom the Software is
-		furnished to do so, subject to the following conditions:
-
-		The above copyright notice and this permission notice shall be included in all
-		copies or substantial portions of the Software.
-
-		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-		SOFTWARE.
-	@end-module-license
-
-	@module-configuration:
-		{
-			"package": "optcall",
-			"path": "optcall/optcall.js",
-			"file": "optcall.js",
-			"module": "optcall",
-			"author": "Richeve S. Bebedor",
-			"contributors": [
-				"John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
-			],
-			"eMail": "richeve.bebedor@gmail.com",
-			"repository": "https://github.com/volkovasystems/optcall.git",
-			"test": "optcall-test.js",
-			"global": true
-		}
-	@end-module-configuration
-
-	@module-documentation:
-		Delegate option-callback procedures.
-
-		This method will insert helper methods, chain, release and chained to the class.
-	@end-module-documentation
-
-	@include:
-		{
-			"ate": "ate",
-			"clazof": "clazof",
-			"falzy": "falzy",
-			"harden": "harden",
-			"proplist": "proplist",
-			"protease": "protease",
-			"protype": "protype",
-			"snapd": "snapd",
-			"vound": "vound"
-		}
-	@end-include
-*/
-
-var _for = require("babel-runtime/core-js/symbol/for");
-
-var _for2 = _interopRequireDefault(_for);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+              	@module-license:
+              		The MIT License (MIT)
+              		@mit-license
+              
+              		Copyright (@c) 2017 Richeve Siodina Bebedor
+              		@email: richeve.bebedor@gmail.com
+              
+              		Permission is hereby granted, free of charge, to any person obtaining a copy
+              		of this software and associated documentation files (the "Software"), to deal
+              		in the Software without restriction, including without limitation the rights
+              		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+              		copies of the Software, and to permit persons to whom the Software is
+              		furnished to do so, subject to the following conditions:
+              
+              		The above copyright notice and this permission notice shall be included in all
+              		copies or substantial portions of the Software.
+              
+              		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+              		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+              		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+              		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+              		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+              		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+              		SOFTWARE.
+              	@end-module-license
+              
+              	@module-configuration:
+              		{
+              			"package": "optcall",
+              			"path": "optcall/optcall.js",
+              			"file": "optcall.js",
+              			"module": "optcall",
+              			"author": "Richeve S. Bebedor",
+              			"contributors": [
+              				"John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
+              			],
+              			"eMail": "richeve.bebedor@gmail.com",
+              			"repository": "https://github.com/volkovasystems/optcall.git",
+              			"test": "optcall-test.js",
+              			"global": true
+              		}
+              	@end-module-configuration
+              
+              	@module-documentation:
+              		Delegate option-callback procedures.
+              
+              		This method will insert helper methods, chain, release and chained to the class.
+              	@end-module-documentation
+              
+              	@include:
+              		{
+              			"ate": "ate",
+              			"clazof": "clazof",
+              			"falzy": "falzy",
+              			"harden": "harden",
+              			"proplist": "proplist",
+              			"protease": "protease",
+              			"protype": "protype",
+              			"snapd": "snapd",
+              			"vound": "vound"
+              		}
+              	@end-include
+              */var _for = require("babel-runtime/core-js/symbol/for");var _for2 = _interopRequireDefault(_for);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 var ate = require("ate");
 var clazof = require("clazof");
@@ -89,36 +83,34 @@ harden("OPTCALL_WRAPPED", "optcall-wrapped");
 
 var optcall = function optcall(engine) {
 	/*;
- 	@meta-configuration:
- 		{
- 			"engine:required": [
- 				"object",
- 				"function"
- 			]
- 		}
- 	@end-meta-configuration
- */
+                                        	@meta-configuration:
+                                        		{
+                                        			"engine:required": [
+                                        				"object",
+                                        				"function"
+                                        			]
+                                        		}
+                                        	@end-meta-configuration
+                                        */
 
 	if (falzy(engine)) {
 		throw new Error("engine not given");
 	}
 
-	protease(engine).forEach(function onEachPrototype(prototype) {
+	protease(engine).
+	forEach(function onEachPrototype(prototype) {
 		if (prototype.OPTCALL_WRAPPED !== OPTCALL_WRAPPED) {
 			ate("OPTCALL_WRAPPED", OPTCALL_WRAPPED, prototype);
+
 		} else {
 			return;
 		}
 
-		snapd.bind(prototype)(function clear() {
-			delete prototype.OPTCALL_WRAPPED;
-		});
+		snapd.bind(prototype)(function clear() {delete prototype.OPTCALL_WRAPPED;});
 
-		proplist(prototype).forEach(function onEachDefinition(definition) {
-			var property = definition.property,
-			    type = definition.type,
-			    value = definition.value;
-
+		proplist(prototype).
+		forEach(function onEachDefinition(definition) {var
+			property = definition.property,type = definition.type,value = definition.value;
 
 			if (type == FUNCTION && FUNCTION_PATTERN.test(value)) {
 				prototype[property] = wrap(value);
@@ -127,10 +119,10 @@ var optcall = function optcall(engine) {
 	});
 
 	/*;
- 	@note:
- 		Attach helper methods.
- 	@end-note
- */
+     	@note:
+     		Attach helper methods.
+     	@end-note
+     */
 	var chain = function chain() {
 		this[CHAIN_MODE] = true;
 
@@ -151,6 +143,7 @@ var optcall = function optcall(engine) {
 		engine.prototype.chain = chain;
 		engine.prototype.release = release;
 		engine.prototype.chained = chained;
+
 	} else if (protype(engine, OBJECT) && clazof(engine, engine.constructor)) {
 		engine.constructor.prototype.chain = chain;
 		engine.constructor.prototype.release = release;
@@ -165,4 +158,5 @@ var optcall = function optcall(engine) {
 };
 
 module.exports = optcall;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm9wdGNhbGwuanMiXSwibmFtZXMiOlsiYXRlIiwicmVxdWlyZSIsImNsYXpvZiIsImZhbHp5IiwiaGFyZGVuIiwicHJvcGxpc3QiLCJwcm90ZWFzZSIsInByb3R5cGUiLCJzbmFwZCIsInZvdW5kIiwid3JhcCIsIkZVTkNUSU9OX1BBVFRFUk4iLCJvcHRjYWxsIiwiZW5naW5lIiwiRXJyb3IiLCJmb3JFYWNoIiwib25FYWNoUHJvdG90eXBlIiwicHJvdG90eXBlIiwiT1BUQ0FMTF9XUkFQUEVEIiwiYmluZCIsImNsZWFyIiwib25FYWNoRGVmaW5pdGlvbiIsImRlZmluaXRpb24iLCJwcm9wZXJ0eSIsInR5cGUiLCJ2YWx1ZSIsIkZVTkNUSU9OIiwidGVzdCIsImNoYWluIiwiQ0hBSU5fTU9ERSIsInJlbGVhc2UiLCJjaGFpbmVkIiwiT0JKRUNUIiwiY29uc3RydWN0b3IiLCJtb2R1bGUiLCJleHBvcnRzIl0sIm1hcHBpbmdzIjoiQUFBQTs7QUFFQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFpRUEsSUFBTUEsTUFBTUMsUUFBUyxLQUFULENBQVo7QUFDQSxJQUFNQyxTQUFTRCxRQUFTLFFBQVQsQ0FBZjtBQUNBLElBQU1FLFFBQVFGLFFBQVMsT0FBVCxDQUFkO0FBQ0EsSUFBTUcsU0FBU0gsUUFBUyxRQUFULENBQWY7QUFDQSxJQUFNSSxXQUFXSixRQUFTLFVBQVQsQ0FBakI7QUFDQSxJQUFNSyxXQUFXTCxRQUFTLFVBQVQsQ0FBakI7QUFDQSxJQUFNTSxVQUFVTixRQUFTLFNBQVQsQ0FBaEI7QUFDQSxJQUFNTyxRQUFRUCxRQUFTLE9BQVQsQ0FBZDtBQUNBLElBQU1RLFFBQVFSLFFBQVMsT0FBVCxDQUFkOztBQUVBLElBQU1TLE9BQU9ULFFBQVMsV0FBVCxDQUFiO0FBQ0EsSUFBTVUsbUJBQW1CLHlFQUF6Qjs7QUFFQVAsT0FBUSxZQUFSLEVBQXNCLG1CQUFZLFlBQVos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bW9kdWxlLWxpY2Vuc2U6XG5cdFx0VGhlIE1JVCBMaWNlbnNlIChNSVQpXG5cdFx0QG1pdC1saWNlbnNlXG5cblx0XHRDb3B5cmlnaHQgKEBjKSAyMDE3IFJpY2hldmUgU2lvZGluYSBCZWJlZG9yXG5cdFx0QGVtYWlsOiByaWNoZXZlLmJlYmVkb3JAZ21haWwuY29tXG5cblx0XHRQZXJtaXNzaW9uIGlzIGhlcmVieSBncmFudGVkLCBmcmVlIG9mIGNoYXJnZSwgdG8gYW55IHBlcnNvbiBvYnRhaW5pbmcgYSBjb3B5XG5cdFx0b2YgdGhpcyBzb2Z0d2FyZSBhbmQgYXNzb2NpYXRlZCBkb2N1bWVudGF0aW9uIGZpbGVzICh0aGUgXCJTb2Z0d2FyZVwiKSwgdG8gZGVhbFxuXHRcdGluIHRoZSBTb2Z0d2FyZSB3aXRob3V0IHJlc3RyaWN0aW9uLCBpbmNsdWRpbmcgd2l0aG91dCBsaW1pdGF0aW9uIHRoZSByaWdodHNcblx0XHR0byB1c2UsIGNvcHksIG1vZGlmeSwgbWVyZ2UsIHB1Ymxpc2gsIGRpc3RyaWJ1dGUsIHN1YmxpY2Vuc2UsIGFuZC9vciBzZWxsXG5cdFx0Y29waWVzIG9mIHRoZSBTb2Z0d2FyZSwgYW5kIHRvIHBlcm1pdCBwZXJzb25zIHRvIHdob20gdGhlIFNvZnR3YXJlIGlzXG5cdFx0ZnVybmlzaGVkIHRvIGRvIHNvLCBzdWJqZWN0IHRvIHRoZSBmb2xsb3dpbmcgY29uZGl0aW9uczpcblxuXHRcdFRoZSBhYm92ZSBjb3B5cmlnaHQgbm90aWNlIGFuZCB0aGlzIHBlcm1pc3Npb24gbm90aWNlIHNoYWxsIGJlIGluY2x1ZGVkIGluIGFsbFxuXHRcdGNvcGllcyBvciBzdWJzdGFudGlhbCBwb3J0aW9ucyBvZiB0aGUgU29mdHdhcmUuXG5cblx0XHRUSEUgU09GVFdBUkUgSVMgUFJPVklERUQgXCJBUyBJU1wiLCBXSVRIT1VUIFdBUlJBTlRZIE9GIEFOWSBLSU5ELCBFWFBSRVNTIE9SXG5cdFx0SU1QTElFRCwgSU5DTFVESU5HIEJVVCBOT1QgTElNSVRFRCBUTyBUSEUgV0FSUkFOVElFUyBPRiBNRVJDSEFOVEFCSUxJVFksXG5cdFx0RklUTkVTUyBGT1IgQSBQQVJUSUNVTEFSIFBVUlBPU0UgQU5EIE5PTklORlJJTkdFTUVOVC4gSU4gTk8gRVZFTlQgU0hBTEwgVEhFXG5cdFx0QVVUSE9SUyBPUiBDT1BZUklHSFQgSE9MREVSUyBCRSBMSUFCTEUgRk9SIEFOWSBDTEFJTSwgREFNQUdFUyBPUiBPVEhFUlxuXHRcdExJQUJJTElUWSwgV0hFVEhFUiBJTiBBTiBBQ1RJT04gT0YgQ09OVFJBQ1QsIFRPUlQgT1IgT1RIRVJXSVNFLCBBUklTSU5HIEZST00sXG5cdFx0T1VUIE9GIE9SIElOIENPTk5FQ1RJT04gV0lUSCBUSEUgU09GVFdBUkUgT1IgVEhFIFVTRSBPUiBPVEhFUiBERUFMSU5HUyBJTiBUSEVcblx0XHRTT0ZUV0FSRS5cblx0QGVuZC1tb2R1bGUtbGljZW5zZVxuXG5cdEBtb2R1bGUtY29uZmlndXJhdGlvbjpcblx0XHR7XG5cdFx0XHRcInBhY2thZ2VcIjogXCJvcHRjYWxsXCIsXG5cdFx0XHRcInBhdGhcIjogXCJvcHRjYWxsL29wdGNhbGwuanNcIixcblx0XHRcdFwiZmlsZVwiOiBcIm9wdGNhbGwuanNcIixcblx0XHRcdFwibW9kdWxlXCI6IFwib3B0Y2FsbFwiLFxuXHRcdFx0XCJhdXRob3JcIjogXCJSaWNoZXZlIFMuIEJlYmVkb3JcIixcblx0XHRcdFwiY29udHJpYnV0b3JzXCI6IFtcblx0XHRcdFx0XCJKb2huIExlbm9uIE1hZ2hhbm95IDxqb2hubGVub25tYWdoYW5veUBnbWFpbC5jb20+XCJcblx0XHRcdF0sXG5cdFx0XHRcImVNYWlsXCI6IFwicmljaGV2ZS5iZWJlZG9yQGdtYWlsLmNvbVwiLFxuXHRcdFx0XCJyZXBvc2l0b3J5XCI6IFwiaHR0cHM6Ly9naXRodWIuY29tL3ZvbGtvdmFzeXN0ZW1zL29wdGNhbGwuZ2l0XCIsXG5cdFx0XHRcInRlc3RcIjogXCJvcHRjYWxsLXRlc3QuanNcIixcblx0XHRcdFwiZ2xvYmFsXCI6IHRydWVcblx0XHR9XG5cdEBlbmQtbW9kdWxlLWNvbmZpZ3VyYXRpb25cblxuXHRAbW9kdWxlLWRvY3VtZW50YXRpb246XG5cdFx0RGVsZWdhdGUgb3B0aW9uLWNhbGxiYWNrIHByb2NlZHVyZXMuXG5cblx0XHRUaGlzIG1ldGhvZCB3aWxsIGluc2VydCBoZWxwZXIgbWV0aG9kcywgY2hhaW4sIHJlbGVhc2UgYW5kIGNoYWluZWQgdG8gdGhlIGNsYXNzLlxuXHRAZW5kLW1vZHVsZS1kb2N1bWVudGF0aW9uXG5cblx0QGluY2x1ZGU6XG5cdFx0e1xuXHRcdFx0XCJhdGVcIjogXCJhdGVcIixcblx0XHRcdFwiY2xhem9mXCI6IFwiY2xhem9mXCIsXG5cdFx0XHRcImZhbHp5XCI6IFwiZmFsenlcIixcblx0XHRcdFwiaGFyZGVuXCI6IFwiaGFyZGVuXCIsXG5cdFx0XHRcInByb3BsaXN0XCI6IFwicHJvcGxpc3RcIixcblx0XHRcdFwicHJvdGVhc2VcIjogXCJwcm90ZWFzZVwiLFxuXHRcdFx0XCJwcm90eXBlXCI6IFwicHJvdHlwZVwiLFxuXHRcdFx0XCJzbmFwZFwiOiBcInNuYXBkXCIsXG5cdFx0XHRcInZvdW5kXCI6IFwidm91bmRcIlxuXHRcdH1cblx0QGVuZC1pbmNsdWRlXG4qL1xuXG5jb25zdCBhdGUgPSByZXF1aXJlKCBcImF0ZVwiICk7XG5jb25zdCBjbGF6b2YgPSByZXF1aXJlKCBcImNsYXpvZlwiICk7XG5jb25zdCBmYWx6eSA9IHJlcXVpcmUoIFwiZmFsenlcIiApO1xuY29uc3QgaGFyZGVuID0gcmVxdWlyZSggXCJoYXJkZW5cIiApO1xuY29uc3QgcHJvcGxpc3QgPSByZXF1aXJlKCBcInByb3BsaXN0XCIgKTtcbmNvbnN0IHByb3RlYXNlID0gcmVxdWlyZSggXCJwcm90ZWFzZVwiICk7XG5jb25zdCBwcm90eXBlID0gcmVxdWlyZSggXCJwcm90eXBlXCIgKTtcbmNvbnN0IHNuYXBkID0gcmVxdWlyZSggXCJzbmFwZFwiICk7XG5jb25zdCB2b3VuZCA9IHJlcXVpcmUoIFwidm91bmRcIiApO1xuXG5jb25zdCB3cmFwID0gcmVxdWlyZSggXCIuL3dyYXAuanNcIiApO1xuY29uc3QgRlVOQ1RJT05fUEFUVEVSTiA9IC9eZnVuY3Rpb25cXHMrKFthLXpfJF1bYS16QS1aMC05XyRdKyk/XFxzKlxcKFxccypvcHRpb25cXHMqXFwsXFxzKmNhbGxiYWNrXFxzKlxcKS87XG5cbmhhcmRlbiggXCJDSEFJTl9NT0RFXCIsIFN5bWJvbC5mb3IoIFwiY2hhaW4tbW9kZVwiICkgKTtcbmhhcmRlbiggXCJPUFRDQUxMX1dSQVBQRURcIiwgXCJvcHRjYWxsLXdyYXBwZWRcIiApO1xuXG5jb25zdCBvcHRjYWxsID0gZnVuY3Rpb24gb3B0Y2FsbCggZW5naW5lICl7XG5cdC8qO1xuXHRcdEBtZXRhLWNvbmZpZ3VyYXRpb246XG5cdFx0XHR7XG5cdFx0XHRcdFwiZW5naW5lOnJlcXVpcmVkXCI6IFtcblx0XHRcdFx0XHRcIm9iamVjdFwiLFxuXHRcdFx0XHRcdFwiZnVuY3Rpb25cIlxuXHRcdFx0XHRdXG5cdFx0XHR9XG5cdFx0QGVuZC1tZXRhLWNvbmZpZ3VyYXRpb25cblx0Ki9cblxuXHRpZiggZmFsenkoIGVuZ2luZSApICl7XG5cdFx0dGhyb3cgbmV3IEVycm9yKCBcImVuZ2luZSBub3QgZ2l2ZW5cIiApO1xuXHR9XG5cblx0cHJvdGVhc2UoIGVuZ2luZSApXG5cdFx0LmZvckVhY2goIGZ1bmN0aW9uIG9uRWFjaFByb3RvdHlwZSggcHJvdG90eXBlICl7XG5cdFx0XHRpZiggcHJvdG90eXBlLk9QVENBTExfV1JBUFBFRCAhPT0gT1BUQ0FMTF9XUkFQUEVEICl7XG5cdFx0XHRcdGF0ZSggXCJPUFRDQUxMX1dSQVBQRURcIiwgT1BUQ0FMTF9XUkFQUEVELCBwcm90b3R5cGUgKTtcblxuXHRcdFx0fWVsc2V7XG5cdFx0XHRcdHJldHVybjtcblx0XHRcdH1cblxuXHRcdFx0c25hcGQuYmluZCggcHJvdG90eXBlICkoIGZ1bmN0aW9uIGNsZWFyKCApeyBkZWxldGUgcHJvdG90eXBlLk9QVENBTExfV1JBUFBFRDsgfSApO1xuXG5cdFx0XHRwcm9wbGlzdCggcHJvdG90eXBlIClcblx0XHRcdFx0LmZvckVhY2goIGZ1bmN0aW9uIG9uRWFjaERlZmluaXRpb24oIGRlZmluaXRpb24gKXtcblx0XHRcdFx0XHRsZXQgeyBwcm9wZXJ0eSwgdHlwZSwgdmFsdWUgfSA9IGRlZmluaXRpb247XG5cblx0XHRcdFx0XHRpZiggdHlwZSA9PSBGVU5DVElPTiAmJiBGVU5DVElPTl9QQVRURVJOLnRlc3QoIHZhbHVlICkgKXtcblx0XHRcdFx0XHRcdHByb3RvdHlwZVsgcHJvcGVydHkgXSA9IHdyYXAoIHZhbHVlICk7XG5cdFx0XHRcdFx0fVxuXHRcdFx0XHR9ICk7XG5cdFx0fSApO1xuXG5cdC8qO1xuXHRcdEBub3RlOlxuXHRcdFx0QXR0YWNoIGhlbHBlciBtZXRob2RzLlxuXHRcdEBlbmQtbm90ZVxuXHQqL1xuXHRsZXQgY2hhaW4gPSBmdW5jdGlvbiBjaGFpbiggKXtcblx0XHR0aGlzWyBDSEFJTl9NT0RFIF0gPSB0cnVlO1xuXG5cdFx0cmV0dXJuIHRoaXM7XG5cdH07XG5cblx0bGV0IHJlbGVhc2UgPSBmdW5jdGlvbiByZWxlYXNlKCApe1xuXHRcdHRoaXNbIENIQUlOX01PREUgXSA9IGZhbHNlO1xuXG5cdFx0cmV0dXJuIHRoaXM7XG5cdH07XG5cblx0bGV0IGNoYWluZWQgPSBmdW5jdGlvbiBjaGFpbmVkKCApe1xuXHRcdHJldHVybiAoIHRoaXNbIENIQUlOX01PREUgXSB8fCBmYWxzZSApO1xuXHR9O1xuXG5cdGlmKCBwcm90eXBlKCBlbmdpbmUsIEZVTkNUSU9OICkgKXtcblx0XHRlbmdpbmUucHJvdG90eXBlLmNoYWluID0gY2hhaW47XG5cdFx0ZW5naW5lLnByb3RvdHlwZS5yZWxlYXNlID0gcmVsZWFzZTtcblx0XHRlbmdpbmUucHJvdG90eXBlLmNoYWluZWQgPSBjaGFpbmVkO1xuXG5cdH1lbHNlIGlmKCBwcm90eXBlKCBlbmdpbmUsIE9CSkVDVCApICYmIGNsYXpvZiggZW5naW5lLCBlbmdpbmUuY29uc3RydWN0b3IgKSApe1xuXHRcdGVuZ2luZS5jb25zdHJ1Y3Rvci5wcm90b3R5cGUuY2hhaW4gPSBjaGFpbjtcblx0XHRlbmdpbmUuY29uc3RydWN0b3IucHJvdG90eXBlLnJlbGVhc2UgPSByZWxlYXNlO1xuXHRcdGVuZ2luZS5jb25zdHJ1Y3Rvci5wcm90b3R5cGUuY2hhaW5lZCA9IGNoYWluZWQ7XG5cblx0XHRlbmdpbmUuY2hhaW4gPSB2b3VuZCggY2hhaW4sIGVuZ2luZSApO1xuXHRcdGVuZ2luZS5yZWxlYXNlID0gdm91bmQoIHJlbGVhc2UsIGVuZ2luZSApO1xuXHRcdGVuZ2luZS5jaGFpbmVkID0gdm91bmQoIGNoYWluZWQsIGVuZ2luZSApO1xuXHR9XG5cblx0cmV0dXJuIGVuZ2luZTtcbn07XG5cbm1vZHVsZS5leHBvcnRzID0gb3B0Y2FsbDtcbiJdfQ==
+
+//# sourceMappingURL=optcall.support.js.map

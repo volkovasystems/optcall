@@ -7,8 +7,8 @@ module.exports = {
 	"entry": "./optcall.support.js",
 	"resolve": {
 		"descriptionFiles": [
-			".bower.json",
 			"bower.json",
+			".bower.json",
 			"package.json"
 		],
 		"modules": [
@@ -25,9 +25,9 @@ module.exports = {
 	"module": {
 		"rules": [
 			{
-				"enforce": "pre",
 				"test": /\.support\.js$/,
-				"loader": "source-map-loader"
+				"loader": "source-map-loader",
+				"enforce": "pre"
 			}
 		]
 	},
@@ -48,5 +48,5 @@ module.exports = {
 			"mangle": false
 		} )
 	],
-	"devtool": "#inline-source-map"
+	"devtool": "#source-map"
 };
