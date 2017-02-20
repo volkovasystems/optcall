@@ -48,4 +48,5 @@ transpher \
 truly \
 truu \
 vound \
---save
+--save \
+--force-latest
