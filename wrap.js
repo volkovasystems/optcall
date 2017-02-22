@@ -53,6 +53,7 @@
               			"async": "async",
               			"ate": "ate",
               			"called": "called",
+              			"clazof": "clazof",
               			"depher": "depher",
               			"falzy": "falzy",
               			"harden": "harden",
@@ -71,6 +72,7 @@
 
 var ate = require("ate");
 var called = require("called");
+var clazof = require("clazof");
 var depher = require("depher");
 var falzy = require("falzy");
 var harden = require("harden");
@@ -114,7 +116,22 @@ var wrap = function wrap(method) {
 	var delegate = function delegate(option, callback) {
 		var parameter = raze(arguments);
 
-		option = depher(parameter, OBJECT, {});
+		/*;
+                                   	@note:
+                                   		Do not execute if the first parameter is not an object
+                                   			and if the first parameter is not an object then it should
+                                   			not be in chain mode.
+                                   	@end-note
+                                   */
+		if (!protype(parameter[0], OBJECT) && (
+		falzy(this.option) ||
+		!clazof(this.option, "Option") ||
+		!this.chained()))
+		{
+			return this;
+		}
+
+		option = depher(parameter, OBJECT, this.option);
 		var self = option.self || this;
 
 		self.option = self.option || option;
