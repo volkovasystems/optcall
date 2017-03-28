@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.deploy.js",
   "support": "optcall.support.js",
@@ -21,29 +21,25 @@
     "test",
     "tests"
   ],
-  "resolutions": {
-    "depher": "^0.17.0",
-    "dephall": "^0.15.0"
-  },
   "dependencies": {
-    "async": "^2.1.5",
-    "ate": "^0.11.0",
-    "called": "^0.14.0",
-    "clazof": "^0.12.0",
-    "depher": "^0.17.0",
-    "falzy": "^0.13.0",
-    "glucose": "^0.13.0",
-    "harden": "^0.16.0",
-    "kloak": "^0.8.0",
-    "optfor": "^0.16.0",
-    "proplist": "^0.10.0",
-    "protease": "^0.9.0",
-    "protype": "^0.17.0",
-    "raze": "^0.19.0",
-    "snapd": "^0.15.0",
-    "transpher": "^0.10.0",
-    "truly": "^0.13.0",
-    "truu": "^0.12.0",
-    "vound": "^0.12.0"
+    "async": "^2.2.0",
+    "ate": "^0.15.0",
+    "called": "^0.17.0",
+    "clazof": "^0.18.0",
+    "depher": "^0.22.0",
+    "falzy": "^0.17.0",
+    "glucose": "^0.16.0",
+    "harden": "^0.21.0",
+    "kloak": "^0.11.0",
+    "optfor": "^0.18.0",
+    "proplist": "^0.17.0",
+    "protease": "^0.15.0",
+    "protype": "^0.21.0",
+    "raze": "^0.24.0",
+    "snapd": "^0.17.0",
+    "transpher": "^0.14.0",
+    "truly": "^0.17.0",
+    "truu": "^0.22.0",
+    "vound": "^0.14.0"
   }
 }
