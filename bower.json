@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.deploy.js",
   "support": "optcall.support.js",
@@ -24,22 +24,22 @@
   "dependencies": {
     "async": "^2.2.0",
     "ate": "^0.15.0",
-    "called": "^0.17.0",
-    "clazof": "^0.18.0",
-    "depher": "^0.22.0",
+    "called": "^0.18.0",
+    "clazof": "^0.19.0",
+    "depher": "^0.23.0",
     "falzy": "^0.17.0",
-    "glucose": "^0.16.0",
+    "glucose": "^0.17.0",
     "harden": "^0.21.0",
-    "kloak": "^0.11.0",
-    "optfor": "^0.18.0",
-    "proplist": "^0.17.0",
+    "kloak": "^0.12.0",
+    "optfor": "^0.19.0",
+    "proplist": "^0.18.0",
     "protease": "^0.15.0",
     "protype": "^0.21.0",
-    "raze": "^0.24.0",
-    "snapd": "^0.17.0",
-    "transpher": "^0.14.0",
+    "raze": "^0.25.0",
+    "snapd": "^0.18.0",
+    "transpher": "^0.15.0",
     "truly": "^0.17.0",
-    "truu": "^0.22.0",
-    "vound": "^0.14.0"
+    "truu": "^0.23.0",
+    "vound": "^0.15.0"
   }
 }
