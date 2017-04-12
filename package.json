@@ -1,6 +1,6 @@
 {
   "name": "optcall",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Delegate option-callback procedures.",
   "main": "optcall.js",
   "support": "optcall.support.js",
@@ -28,33 +28,33 @@
   },
   "homepage": "https://github.com/volkovasystems/optcall#readme",
   "dependencies": {
-    "async": "^2.2.0",
+    "async": "^2.3.0",
     "ate": "^0.15.0",
     "babel-runtime": "^6.23.0",
-    "called": "^0.18.0",
-    "clazof": "^0.19.0",
-    "depher": "^0.23.0",
+    "called": "^0.21.0",
+    "clazof": "^0.21.0",
+    "depher": "^0.26.0",
     "falzy": "^0.17.0",
-    "glucose": "^0.17.0",
+    "glucose": "^0.19.0",
     "harden": "^0.21.0",
-    "kloak": "^0.12.0",
-    "optfor": "^0.19.0",
-    "proplist": "^0.18.0",
+    "kloak": "^0.14.0",
+    "optfor": "^0.21.0",
+    "proplist": "^0.20.0",
     "protease": "^0.15.0",
     "protype": "^0.21.0",
     "raze": "^0.25.0",
-    "snapd": "^0.18.0",
-    "transpher": "^0.15.0",
+    "snapd": "^0.19.0",
+    "transpher": "^0.17.0",
     "truly": "^0.17.0",
     "truu": "^0.23.0",
-    "vound": "^0.15.0"
+    "vound": "^0.17.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-latest": "^6.24.0",
-    "source-map-loader": "^0.2.0",
-    "webpack": "^2.3.2"
+    "babel-preset-latest": "^6.24.1",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.3.3"
   }
 }
