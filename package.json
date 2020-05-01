@@ -8,7 +8,9 @@
   "browser": "optcall.deploy.js",
   "scripts": {
     "build": "babel optcall.js --out-file optcall.support.js --source-maps && babel wrap.module.js -o wrap.js --source-maps && webpack --progress --display-modules",
-    "test": "mocha optcall-test.js"
+    "test": "mocha optcall-test.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -47,7 +49,8 @@
     "transpher": "^0.17.0",
     "truly": "^0.17.0",
     "truu": "^0.23.0",
-    "vound": "^0.17.0"
+    "vound": "^0.17.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -56,5 +59,6 @@
     "babel-preset-latest": "^6.24.1",
     "source-map-loader": "^0.2.1",
     "webpack": "^2.3.3"
-  }
+  },
+  "snyk": true
 }
