@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/volkovasystems/optcall#readme",
   "dependencies": {
-    "async": "^2.3.0",
+    "async": "^3.2.2",
     "ate": "^0.15.0",
     "babel-runtime": "^6.23.0",
     "called": "^0.21.0",
